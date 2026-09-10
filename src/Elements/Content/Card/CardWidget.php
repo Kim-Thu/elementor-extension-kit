@@ -64,17 +64,13 @@ final class CardWidget extends Widget_Base
 
     protected function render(): void
     {
-        $settings = $this->get_settings_for_display();
-        ?>
-        <article class="eek-card">
-            <?php if (! empty($settings['title'])) : ?>
-                <h3 class="eek-card__title"><?php echo esc_html((string) $settings['title']); ?></h3>
-            <?php endif; ?>
+        $view = CardLogic::toViewModel($this->get_settings_for_display());
+        $template = __DIR__ . '/templates/card.php';
 
-            <?php if (! empty($settings['description'])) : ?>
-                <div class="eek-card__description"><?php echo wp_kses_post((string) $settings['description']); ?></div>
-            <?php endif; ?>
-        </article>
-        <?php
+        if (! is_readable($template)) {
+            return;
+        }
+
+        require $template;
     }
 }

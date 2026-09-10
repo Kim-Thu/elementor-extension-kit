@@ -11,12 +11,24 @@ Một element gồm:
 ```text
 src/Elements/{Domain}/{Element}/
 ├── {Element}Widget.php
+├── {Element}Logic.php
 ├── element.json
+├── templates/
+│   └── {element}.php
 ├── css/
 └── js/
 ```
 
 `element.json` là manifest duy nhất để registry biết class và asset của element.
+
+## Responsibility split
+
+- `{Element}Widget.php`: metadata Elementor, controls, dependencies và orchestration.
+- `{Element}Logic.php`: chuẩn hóa view data / logic presentation, không render HTML.
+- `templates/*.php`: chỉ render markup từ view model đã chuẩn hóa.
+- `css/`: style chỉ thuộc element đó.
+- `js/`: behavior chỉ thuộc element đó.
+- `element.json`: metadata/asset manifest của module.
 
 ## Rules
 
@@ -28,6 +40,8 @@ src/Elements/{Domain}/{Element}/
 6. Global symbols phải có prefix/namespace riêng.
 7. Input phải sanitize/validate theo ngữ cảnh; output phải escape ở điểm render.
 8. Hook/action/filter đăng ký tập trung trong lifecycle, không rải trong constructor widget.
+9. Widget không chứa primary markup; template không chứa Elementor control/lifecycle logic.
+10. Logic class không phụ thuộc template hoặc echo output.
 
 ## Reuse
 
