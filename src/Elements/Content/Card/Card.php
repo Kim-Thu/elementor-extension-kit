@@ -6,6 +6,7 @@ namespace ElementorExtensionKit\Elements\Content\Card;
 
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
+use ElementorExtensionKit\Core\Plugin;
 
 final class Card extends Widget_Base
 {
@@ -21,12 +22,12 @@ final class Card extends Widget_Base
 
     public function get_icon(): string
     {
-        return 'eicon-info-box';
+        return 'eek-brand-mark';
     }
 
     public function get_categories(): array
     {
-        return ['general'];
+        return [Plugin::ELEMENT_CATEGORY];
     }
 
     public function get_style_depends(): array
