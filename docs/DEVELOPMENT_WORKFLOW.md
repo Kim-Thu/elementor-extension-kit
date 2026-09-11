@@ -4,6 +4,8 @@
 
 Mọi thay đổi phải truy vết được theo chuỗi: **Issue → Branch → Commit → Verification → Result**.
 
+Phase đang active phải giữ scope đã chốt. Thay đổi kiến trúc mới không được chen vào phase hiện tại; ghi thành change request và đưa sang phase sau trừ khi đó là fix bắt buộc để đạt chính baseline của phase hiện tại.
+
 ## Issue contract
 
 Mỗi issue bắt buộc có các phần:
@@ -17,6 +19,43 @@ Mỗi issue bắt buộc có các phần:
 7. `Done Checklist` — checklist trước khi đóng issue.
 
 Một issue không nên chứa nhiều mục tiêu độc lập. Nếu có thể đóng một phần mà phần còn lại vẫn có giá trị độc lập, phải tách issue.
+
+## Implementation simplicity rule
+
+Ưu tiên cấu trúc nhỏ nhất giải quyết đúng nhu cầu hiện tại.
+
+Element mặc định:
+
+```text
+src/Elements/{Domain}/{Element}/
+├── {Element}.php
+├── element.json
+├── templates/   # optional
+├── css/         # optional
+└── js/          # optional
+```
+
+Rules:
+
+- Element đơn giản dùng một class chính `{Element}.php`.
+- Chỉ tách `templates/` khi có nhiều layout/markup thực sự khác nhau hoặc markup đủ lớn để việc tách làm code dễ đọc hơn.
+- Không tạo `Widget`, `Logic`, `Service`, `Renderer`, `Repository` hoặc helper riêng nếu chỉ pass-through hoặc chưa có complexity/reuse thực tế.
+- CSS/JS chỉ tồn tại khi element thực sự cần asset đó; không tạo file rỗng để đủ cấu trúc.
+- Không tạo abstraction vì dự đoán “có thể cần sau này”.
+
+## Shared extraction rule
+
+Chỉ extract sang `Shared/` khi đồng thời:
+
+- có ít nhất 2 consumer thực tế;
+- cùng semantics, không chỉ giống tên;
+- giảm duplication rõ ràng;
+- không tăng coupling đáng kể;
+- không tạo thêm runtime lookup/load không cần thiết;
+- copy/remove element vẫn rõ dependency cần mang theo/bỏ đi;
+- lợi ích reuse lớn hơn chi phí indirection.
+
+Nếu chưa đạt các điều kiện trên, code ở lại module đang sở hữu nó.
 
 ## Branch convention
 
@@ -67,10 +106,10 @@ Verify: {cách đã kiểm tra hoặc trạng thái kiểm tra}
 Ví dụ:
 
 ```text
-[20260911-064600] t3 refactor: separate Card rendering from Elementor orchestration
+[20260911-065506] t3 refactor: point Card manifest to simplified class
 
-Result: CardWidget no longer owns primary markup; view data and template are isolated inside the Card module.
-Verify: PHP responsibilities reviewed; assets/template remain module-local.
+Result: element.json registers the single Card class while CSS/JS stay module-local.
+Verify: Manifest class path matches the PSR-4 element structure.
 ```
 
 Commit không được chỉ ghi `update`, `fix`, `changes`, `cleanup` hoặc nội dung không nêu kết quả.
@@ -81,8 +120,23 @@ Dùng label theo nhóm:
 
 - `type:*` — loại công việc: `feat`, `fix`, `refactor`, `chore`, `ci`, ...
 - `scope:*` — vùng ảnh hưởng: `core`, `workflow`, `element`, `manifest`, ...
-- `rule:*` — rule phải chứng minh: `srp`, `security`, `asset-locality`, `traceable`, ...
-- `status:*` — trạng thái thực thi: `ready`, `in-progress`, `blocked`, `verified`.
+- `rule:*` — rule phải chứng minh: `security`, `asset-locality`, `traceable`, `reusability`, ...
+- `status:*` — trạng thái thực thi: `ready`, `in-progress`, `blocked`, `done`.
+
+## Verification policy for Phase 1
+
+Phase 1 dùng verification thủ công có evidence rõ ràng. CI/CD hoặc automated validator không phải điều kiện đóng issue ở phase này.
+
+Verification có thể gồm:
+
+- PHP syntax check;
+- review namespace/class/manifest;
+- kiểm tra output escaping;
+- kiểm tra asset locality/path safety;
+- kiểm tra copy/remove module;
+- test case thủ công cho valid/invalid input khi cần.
+
+Automation chỉ được thêm ở phase sau khi chi phí bảo trì hợp lý và nhu cầu đã rõ.
 
 ## Definition of Done
 
@@ -94,4 +148,6 @@ Không đóng issue cho đến khi:
 - [ ] Commit truy vết được issue và có timestamp/result.
 - [ ] Không phát sinh file ngoài Scope mà không được giải thích.
 - [ ] Không phá rule kiến trúc, security hoặc asset locality.
+- [ ] Không thêm abstraction/Shared chưa chứng minh được nhu cầu.
 - [ ] Expected Result đã thực sự đạt, không chỉ hoàn thành Actions.
+- [ ] Nếu phát sinh thay đổi kiến trúc ngoài baseline phase hiện tại, thay đổi đó đã được chuyển sang phase/change request riêng.
