@@ -1,0 +1,39 @@
+/* Elementor editor-only branding for EEK elements. */
+
+.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .elementor-element {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 10px 12px;
+}
+
+.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+}
+
+.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .eek-brand-mark {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: var(--eek-editor-brand-mark-image, none);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .eek-brand-mark::before {
+    content: none !important;
+}
+
+.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .title-wrapper {
+    flex: 1 1 auto;
+    margin: 0;
+    text-align: left;
+}
