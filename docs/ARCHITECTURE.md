@@ -2,65 +2,68 @@
 
 ## Goal
 
-Mỗi element là một module có thể thêm, bỏ hoặc mang sang dự án khác với số thay đổi tối thiểu.
+Mỗi element là một module nhỏ, độc lập, có thể thêm, bỏ hoặc mang sang dự án khác với số dependency và số thay đổi tối thiểu.
 
-## Module boundary
+## Element module
 
-Một element gồm:
+Cấu trúc mặc định:
 
 ```text
 src/Elements/{Domain}/{Element}/
-├── {Element}Widget.php
-├── {Element}Logic.php
+├── {Element}.php
 ├── element.json
-├── templates/
-│   └── {element}.php
-├── css/
-└── js/
+├── templates/   # optional: chỉ khi có layout/markup khác nhau thật sự
+├── css/         # optional
+└── js/          # optional
 ```
 
-`element.json` là manifest duy nhất để registry biết class và asset của element.
+Không bắt buộc `Widget`, `Logic`, `Service`, `Renderer` hoặc class trung gian. Element nhỏ dùng một class chính `{Element}.php`.
 
-## Responsibility split
+## Responsibilities
 
-- `{Element}Widget.php`: metadata Elementor, controls, dependencies và orchestration.
-- `{Element}Logic.php`: chuẩn hóa view data / logic presentation, không render HTML.
-- `templates/*.php`: chỉ render markup từ view model đã chuẩn hóa.
-- `css/`: style chỉ thuộc element đó.
-- `js/`: behavior chỉ thuộc element đó.
-- `element.json`: metadata/asset manifest của module.
+- `{Element}.php`: Elementor metadata, controls, dependency declarations và orchestration cần thiết.
+- `templates/`: markup cho các layout thực sự khác nhau; element tự chọn template local bằng allow-list rõ ràng.
+- `css/`: style riêng của element.
+- `js/`: behavior riêng của element, chỉ tồn tại khi có behavior cần JavaScript.
+- `element.json`: contract tối thiểu để registry biết element class và optional assets.
 
-## Rules
+## Core rules
 
-1. Element không được phụ thuộc trực tiếp vào element khác.
-2. Code dùng chung phải đi qua `Shared` hoặc một abstraction rõ trách nhiệm.
-3. Asset riêng luôn nằm cùng module element; không đưa vào một `assets/css/widgets.css` hoặc `assets/js/widgets.js` toàn cục.
-4. Asset được `register`, widget tự khai báo dependency để Elementor chỉ enqueue khi cần.
-5. Không có side effect ở thời điểm file được autoload ngoài khai báo class.
-6. Global symbols phải có prefix/namespace riêng.
-7. Input phải sanitize/validate theo ngữ cảnh; output phải escape ở điểm render.
-8. Hook/action/filter đăng ký tập trung trong lifecycle, không rải trong constructor widget.
-9. Widget không chứa primary markup; template không chứa Elementor control/lifecycle logic.
-10. Logic class không phụ thuộc template hoặc echo output.
+1. Element không phụ thuộc trực tiếp vào element khác.
+2. Asset riêng nằm trong module element và chỉ register khi file thực sự tồn tại.
+3. CSS/JS/template là optional; không tạo file rỗng hoặc behavior giả chỉ để đủ cấu trúc.
+4. Không có side effect ở thời điểm autoload ngoài khai báo class.
+5. Global symbols phải dùng namespace/prefix riêng.
+6. Input phải validate/sanitize theo ngữ cảnh; output escape ở render boundary.
+7. Template không chứa Elementor lifecycle/control registration.
+8. Layout name phải map qua allow-list; không dùng input trực tiếp để tạo path tùy ý.
+9. Manifest/asset path không được đi ra ngoài module (`../`, absolute path, path traversal).
+10. Registry fail-safe: manifest/class/asset không hợp lệ thì bỏ qua module/phần asset đó, không làm frontend fatal.
 
-## Reuse
+## Shared extraction rule
 
-Để bỏ `Card` khỏi một dự án, xóa thư mục:
+Chỉ tạo `Shared/` khi đồng thời:
+
+- có ít nhất 2 consumer thực tế;
+- cùng semantics, không chỉ giống tên;
+- giảm duplication rõ ràng;
+- không tăng coupling đáng kể;
+- không tạo thêm runtime lookup/load không cần thiết;
+- copy/remove element vẫn nhìn ra dependency cần mang theo hoặc bỏ đi;
+- lợi ích reuse lớn hơn chi phí indirection.
+
+Không tạo Shared vì dự đoán có thể dùng lại trong tương lai.
+
+## Portability
+
+Để bỏ `Card`, xóa nguyên thư mục:
 
 ```text
 src/Elements/Content/Card/
 ```
 
-Registry quét manifest nên không có danh sách asset tập trung phải dọn thêm.
+Registry quét manifest nên không có central element list hoặc global widget asset bundle phải dọn thêm.
 
-Để mang `Card` sang dự án khác, copy nguyên thư mục module và giữ namespace/root convention tương ứng.
+Để mang Card sang dự án khác, copy module cùng các Shared dependency đã được chứng minh (nếu có).
 
-## Shared asset threshold
-
-Chỉ tạo shared CSS/JS khi:
-
-- có ít nhất hai module thực sự dùng chung;
-- hành vi đó là infrastructure/foundation, không phải style riêng;
-- xóa một module không làm shared asset mất ý nghĩa.
-
-Ví dụ phù hợp: design tokens, focus-visible helper, motion utility. Không phù hợp: CSS của Card và Pricing gom chung vì "đều là card".
+Chi tiết manifest contract xem `docs/ELEMENT_CONTRACT.md`.
