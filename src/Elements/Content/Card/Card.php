@@ -34,11 +34,6 @@ final class Card extends Widget_Base
         return ['eek-card'];
     }
 
-    public function get_script_depends(): array
-    {
-        return ['eek-card'];
-    }
-
     protected function register_controls(): void
     {
         $this->start_controls_section('content', [
