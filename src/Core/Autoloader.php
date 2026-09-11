@@ -16,11 +16,32 @@ final class Autoloader
             }
 
             $relative = substr($class, strlen(self::PREFIX));
-            $path = dirname(__DIR__) . '/' . str_replace('\\', '/', $relative) . '.php';
 
-            if (is_readable($path)) {
-                require_once $path;
+            if (
+                $relative === ''
+                || preg_match('/^(?:[A-Za-z_][A-Za-z0-9_]*\\\\)*[A-Za-z_][A-Za-z0-9_]*$/', $relative) !== 1
+            ) {
+                return;
             }
+
+            $sourceRoot = realpath(dirname(__DIR__));
+
+            if ($sourceRoot === false) {
+                return;
+            }
+
+            $path = $sourceRoot . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $relative) . '.php';
+            $resolved = realpath($path);
+
+            if (
+                $resolved === false
+                || ! is_file($resolved)
+                || ! str_starts_with($resolved, $sourceRoot . DIRECTORY_SEPARATOR)
+            ) {
+                return;
+            }
+
+            require_once $resolved;
         });
     }
 }
