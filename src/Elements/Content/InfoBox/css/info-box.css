@@ -1,0 +1,42 @@
+.eek-info-box {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.eek-info-box__media {
+    flex: 0 0 auto;
+}
+
+.eek-info-box__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.eek-info-box__image {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+}
+
+.eek-info-box__content {
+    min-width: 0;
+}
+
+.eek-info-box__title {
+    margin: 0 0 0.5rem;
+}
+
+.eek-info-box__text > :first-child {
+    margin-top: 0;
+}
+
+.eek-info-box__text > :last-child {
+    margin-bottom: 0;
+}
+
+.eek-info-box__link {
+    display: inline-block;
+    margin-top: 0.75rem;
+}
