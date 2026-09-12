@@ -1,0 +1,8 @@
+{
+  "id": "accordion",
+  "name": "Accordion",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\Accordion\\Accordion",
+  "handle": "eek-accordion",
+  "style": "css/accordion.css",
+  "script": "js/accordion.js"
+}
