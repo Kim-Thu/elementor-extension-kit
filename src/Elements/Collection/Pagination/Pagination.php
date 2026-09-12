@@ -7,6 +7,7 @@ namespace ElementorExtensionKit\Elements\Collection\Pagination;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 use ElementorExtensionKit\Core\Plugin;
+use ElementorExtensionKit\Shared\PaginationLinks;
 use WP_Query;
 
 final class Pagination extends Widget_Base
@@ -34,34 +35,20 @@ final class Pagination extends Widget_Base
             return;
         }
 
-        $total = max(1, (int) $wp_query->max_num_pages);
-        if ($total <= 1) {
-            return;
-        }
-
         $settings = $this->get_settings_for_display();
         $current = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
-        $midSize = max(0, min(5, (int) ($settings['mid_size'] ?? 1)));
         $prev = trim((string) ($settings['prev_label'] ?? '')) ?: esc_html__('Previous', 'elementor-extension-kit');
         $next = trim((string) ($settings['next_label'] ?? '')) ?: esc_html__('Next', 'elementor-extension-kit');
+        $links = PaginationLinks::build($current, (int) $wp_query->max_num_pages, $prev, $next, (int) ($settings['mid_size'] ?? 1));
 
-        $links = paginate_links([
-            'current' => $current,
-            'total' => $total,
-            'mid_size' => $midSize,
-            'prev_text' => $prev,
-            'next_text' => $next,
-            'type' => 'array',
-        ]);
-
-        if (! is_array($links) || $links === []) {
+        if ($links === []) {
             return;
         }
         ?>
         <nav class="eek-pagination" aria-label="<?php echo esc_attr__('Pagination', 'elementor-extension-kit'); ?>">
             <ul class="eek-pagination__list">
                 <?php foreach ($links as $link) : ?>
-                    <li class="eek-pagination__item"><?php echo wp_kses_post((string) $link); ?></li>
+                    <li class="eek-pagination__item"><?php echo wp_kses_post($link); ?></li>
                 <?php endforeach; ?>
             </ul>
         </nav>
