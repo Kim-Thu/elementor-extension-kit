@@ -1,0 +1,7 @@
+{
+  "id": "pricing-table",
+  "name": "Pricing Table",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\PricingTable\\PricingTable",
+  "handle": "eek-pricing-table",
+  "style": "css/pricing-table.css"
+}
