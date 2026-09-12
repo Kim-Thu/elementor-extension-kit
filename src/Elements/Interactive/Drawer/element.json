@@ -1,0 +1,8 @@
+{
+  "id": "drawer",
+  "name": "Drawer / Off-canvas",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\Drawer\\Drawer",
+  "handle": "eek-drawer",
+  "style": "css/drawer.css",
+  "script": "js/drawer.js"
+}
