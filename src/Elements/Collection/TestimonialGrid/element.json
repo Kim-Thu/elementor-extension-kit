@@ -1,0 +1,7 @@
+{
+  "id": "testimonial-grid",
+  "name": "Testimonial Grid",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\TestimonialGrid\\TestimonialGrid",
+  "handle": "eek-testimonial-grid",
+  "style": "css/testimonial-grid.css"
+}
