@@ -1,0 +1,8 @@
+{
+  "id": "toggle",
+  "name": "Toggle",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\Toggle\\Toggle",
+  "handle": "eek-toggle",
+  "style": "css/toggle.css",
+  "script": "js/toggle.js"
+}
