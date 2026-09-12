@@ -1,0 +1,1 @@
+.eek-step{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}.eek-step__marker{display:grid;place-items:center;min-width:2.5rem;height:2.5rem;border:1px solid currentColor;border-radius:999px;font-weight:700}.eek-step__body{display:grid;gap:.4rem}.eek-step__title{margin:0}.eek-step__meta{font-size:.875rem;opacity:.65}.eek-step__text{opacity:.85}
