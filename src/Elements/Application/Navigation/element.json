@@ -1,0 +1,7 @@
+{
+  "id": "app-navigation",
+  "name": "App Navigation",
+  "class": "ElementorExtensionKit\\Elements\\Application\\Navigation\\Navigation",
+  "handle": "eek-app-navigation",
+  "style": "css/navigation.css"
+}
