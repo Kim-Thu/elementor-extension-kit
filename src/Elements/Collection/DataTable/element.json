@@ -1,0 +1,7 @@
+{
+  "id": "data-table",
+  "name": "Data Table",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\DataTable\\DataTable",
+  "handle": "eek-data-table",
+  "style": "css/data-table.css"
+}
