@@ -1,0 +1,7 @@
+{
+  "id": "profile-card",
+  "name": "Profile Card",
+  "class": "ElementorExtensionKit\\Elements\\Content\\ProfileCard\\ProfileCard",
+  "handle": "eek-profile-card",
+  "style": "css/profile-card.css"
+}
