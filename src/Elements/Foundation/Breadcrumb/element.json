@@ -1,0 +1,5 @@
+{
+  "name": "eek-breadcrumb",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\Breadcrumb\\Breadcrumb",
+  "styles": ["css/breadcrumb.css"]
+}
