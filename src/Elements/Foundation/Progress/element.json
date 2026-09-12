@@ -1,0 +1,5 @@
+{
+  "name": "eek-progress",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\Progress\\Progress",
+  "styles": ["css/progress.css"]
+}

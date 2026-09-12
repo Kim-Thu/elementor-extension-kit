@@ -1,0 +1,1 @@
+.eek-progress{display:grid;gap:.5rem}.eek-progress__meta{display:flex;justify-content:space-between;gap:1rem;font-size:.875rem}.eek-progress__track{height:.625rem;overflow:hidden;border-radius:999px;background:#e7ebef}.eek-progress__bar{display:block;height:100%;border-radius:inherit;background:currentColor}
