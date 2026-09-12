@@ -1,0 +1,7 @@
+{
+  "id": "post-grid",
+  "name": "Post Grid",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\PostGrid\\PostGrid",
+  "handle": "eek-post-grid",
+  "style": "css/post-grid.css"
+}
