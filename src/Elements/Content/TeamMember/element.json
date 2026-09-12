@@ -1,0 +1,5 @@
+{
+  "name": "eek-team-member",
+  "class": "ElementorExtensionKit\\Elements\\Content\\TeamMember\\TeamMember",
+  "styles": ["css/team-member.css"]
+}

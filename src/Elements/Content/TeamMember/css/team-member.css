@@ -1,0 +1,32 @@
+.eek-team-member {
+    display: grid;
+    gap: 1rem;
+}
+
+.eek-team-member__avatar {
+    display: block;
+    width: 100%;
+    max-width: 12rem;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.eek-team-member__content {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.eek-team-member__name,
+.eek-team-member__role,
+.eek-team-member__bio {
+    margin: 0;
+}
+
+.eek-team-member__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+}
