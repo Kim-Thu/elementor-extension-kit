@@ -1,0 +1,7 @@
+{
+  "id": "page-header",
+  "name": "Page Header",
+  "class": "ElementorExtensionKit\\Elements\\Application\\PageHeader\\PageHeader",
+  "handle": "eek-page-header",
+  "style": "css/page-header.css"
+}
