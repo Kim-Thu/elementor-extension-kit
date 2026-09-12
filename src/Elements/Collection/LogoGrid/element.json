@@ -1,0 +1,7 @@
+{
+  "id": "logo-grid",
+  "name": "Logo Grid",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\LogoGrid\\LogoGrid",
+  "handle": "eek-logo-grid",
+  "style": "css/logo-grid.css"
+}
