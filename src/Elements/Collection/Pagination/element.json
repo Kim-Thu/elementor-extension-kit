@@ -1,0 +1,7 @@
+{
+  "id": "pagination",
+  "name": "Pagination",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\Pagination\\Pagination",
+  "handle": "eek-pagination",
+  "style": "css/pagination.css"
+}
