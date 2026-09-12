@@ -1,0 +1,7 @@
+{
+  "id": "filter-bar",
+  "name": "Filter Bar",
+  "class": "ElementorExtensionKit\\Elements\\Application\\FilterBar\\FilterBar",
+  "handle": "eek-filter-bar",
+  "style": "css/filter-bar.css"
+}
