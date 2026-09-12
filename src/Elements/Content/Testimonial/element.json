@@ -1,0 +1,5 @@
+{
+  "name": "eek-testimonial",
+  "class": "ElementorExtensionKit\\Elements\\Content\\Testimonial\\Testimonial",
+  "styles": ["css/testimonial.css"]
+}
