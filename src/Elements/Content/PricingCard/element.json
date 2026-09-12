@@ -1,5 +1,7 @@
 {
-  "name": "eek-pricing-card",
+  "id": "pricing-card",
+  "name": "Pricing Card",
   "class": "ElementorExtensionKit\\Elements\\Content\\PricingCard\\PricingCard",
-  "styles": ["css/pricing-card.css"]
+  "handle": "eek-pricing-card",
+  "style": "css/pricing-card.css"
 }

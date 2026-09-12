@@ -1,5 +1,7 @@
 {
-  "name": "eek-team-member",
+  "id": "team-member",
+  "name": "Team Member",
   "class": "ElementorExtensionKit\\Elements\\Content\\TeamMember\\TeamMember",
-  "styles": ["css/team-member.css"]
+  "handle": "eek-team-member",
+  "style": "css/team-member.css"
 }

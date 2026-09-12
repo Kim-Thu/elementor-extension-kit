@@ -1,5 +1,7 @@
 {
-  "name": "eek-info-box",
+  "id": "info-box",
+  "name": "Info Box",
   "class": "ElementorExtensionKit\\Elements\\Content\\InfoBox\\InfoBox",
-  "styles": ["css/info-box.css"]
+  "handle": "eek-info-box",
+  "style": "css/info-box.css"
 }

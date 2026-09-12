@@ -1,5 +1,7 @@
 {
-  "name": "eek-badge",
+  "id": "badge",
+  "name": "Badge",
   "class": "ElementorExtensionKit\\Elements\\Foundation\\Badge\\Badge",
-  "styles": ["css/badge.css"]
+  "handle": "eek-badge",
+  "style": "css/badge.css"
 }

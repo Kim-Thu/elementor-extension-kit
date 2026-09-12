@@ -1,5 +1,7 @@
 {
-  "name": "eek-testimonial",
+  "id": "testimonial",
+  "name": "Testimonial",
   "class": "ElementorExtensionKit\\Elements\\Content\\Testimonial\\Testimonial",
-  "styles": ["css/testimonial.css"]
+  "handle": "eek-testimonial",
+  "style": "css/testimonial.css"
 }

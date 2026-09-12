@@ -1,5 +1,7 @@
 {
-  "name": "eek-rating",
+  "id": "rating",
+  "name": "Rating",
   "class": "ElementorExtensionKit\\Elements\\Foundation\\Rating\\Rating",
-  "styles": ["css/rating.css"]
+  "handle": "eek-rating",
+  "style": "css/rating.css"
 }

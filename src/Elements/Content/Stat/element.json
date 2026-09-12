@@ -1,5 +1,7 @@
 {
-  "name": "eek-stat",
+  "id": "stat",
+  "name": "Stat",
   "class": "ElementorExtensionKit\\Elements\\Content\\Stat\\Stat",
-  "styles": ["css/stat.css"]
+  "handle": "eek-stat",
+  "style": "css/stat.css"
 }
