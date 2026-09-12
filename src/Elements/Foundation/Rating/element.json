@@ -1,0 +1,5 @@
+{
+  "name": "eek-rating",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\Rating\\Rating",
+  "styles": ["css/rating.css"]
+}
