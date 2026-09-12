@@ -1,0 +1,7 @@
+{
+  "id": "activity-feed",
+  "name": "Activity Feed",
+  "class": "ElementorExtensionKit\\Elements\\Application\\ActivityFeed\\ActivityFeed",
+  "handle": "eek-activity-feed",
+  "style": "css/activity-feed.css"
+}
