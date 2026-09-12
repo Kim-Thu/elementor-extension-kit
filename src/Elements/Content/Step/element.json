@@ -1,0 +1,5 @@
+{
+  "name": "eek-step",
+  "class": "ElementorExtensionKit\\Elements\\Content\\Step\\Step",
+  "styles": ["css/step.css"]
+}
