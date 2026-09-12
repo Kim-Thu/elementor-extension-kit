@@ -1,0 +1,5 @@
+{
+  "name": "eek-pricing-card",
+  "class": "ElementorExtensionKit\\Elements\\Content\\PricingCard\\PricingCard",
+  "styles": ["css/pricing-card.css"]
+}
