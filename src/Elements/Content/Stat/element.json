@@ -1,0 +1,5 @@
+{
+  "name": "eek-stat",
+  "class": "ElementorExtensionKit\\Elements\\Content\\Stat\\Stat",
+  "styles": ["css/stat.css"]
+}
