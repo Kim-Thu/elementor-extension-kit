@@ -1,0 +1,8 @@
+{
+  "id": "before-after",
+  "name": "Before / After",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\BeforeAfter\\BeforeAfter",
+  "handle": "eek-before-after",
+  "style": "css/before-after.css",
+  "script": "js/before-after.js"
+}
