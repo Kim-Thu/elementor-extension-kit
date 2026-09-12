@@ -1,0 +1,8 @@
+{
+  "id": "dialog",
+  "name": "Modal / Dialog",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\Dialog\\Dialog",
+  "handle": "eek-dialog",
+  "style": "css/dialog.css",
+  "script": "js/dialog.js"
+}
