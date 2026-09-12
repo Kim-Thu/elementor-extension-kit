@@ -1,0 +1,7 @@
+{
+  "id": "empty-state",
+  "name": "Empty State",
+  "class": "ElementorExtensionKit\\Elements\\Application\\EmptyState\\EmptyState",
+  "handle": "eek-empty-state",
+  "style": "css/empty-state.css"
+}
