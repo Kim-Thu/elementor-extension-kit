@@ -1,0 +1,7 @@
+{
+  "id": "team-grid",
+  "name": "Team Grid",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\TeamGrid\\TeamGrid",
+  "handle": "eek-team-grid",
+  "style": "css/team-grid.css"
+}
