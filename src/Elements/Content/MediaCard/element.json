@@ -1,0 +1,7 @@
+{
+  "id": "media-card",
+  "name": "Media Card",
+  "class": "ElementorExtensionKit\\Elements\\Content\\MediaCard\\MediaCard",
+  "handle": "eek-media-card",
+  "style": "css/media-card.css"
+}
