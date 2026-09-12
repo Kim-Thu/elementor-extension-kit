@@ -1,5 +1,7 @@
 {
-  "name": "eek-step",
+  "id": "step",
+  "name": "Step / Timeline Item",
   "class": "ElementorExtensionKit\\Elements\\Content\\Step\\Step",
-  "styles": ["css/step.css"]
+  "handle": "eek-step",
+  "style": "css/step.css"
 }
