@@ -1,0 +1,8 @@
+{
+  "id": "carousel",
+  "name": "Carousel / Slider",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\Carousel\\Carousel",
+  "handle": "eek-carousel",
+  "style": "css/carousel.css",
+  "script": "js/carousel.js"
+}
