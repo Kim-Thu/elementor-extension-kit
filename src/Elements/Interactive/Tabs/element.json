@@ -1,0 +1,8 @@
+{
+  "id": "tabs",
+  "name": "Tabs",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\Tabs\\Tabs",
+  "handle": "eek-tabs",
+  "style": "css/tabs.css",
+  "script": "js/tabs.js"
+}
