@@ -1,0 +1,7 @@
+{
+  "id": "taxonomy-list",
+  "name": "Taxonomy List",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\TaxonomyList\\TaxonomyList",
+  "handle": "eek-taxonomy-list",
+  "style": "css/taxonomy-list.css"
+}
