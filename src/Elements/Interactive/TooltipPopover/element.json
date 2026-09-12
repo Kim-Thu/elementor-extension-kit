@@ -1,0 +1,8 @@
+{
+  "id": "tooltip-popover",
+  "name": "Tooltip / Popover",
+  "class": "ElementorExtensionKit\\Elements\\Interactive\\TooltipPopover\\TooltipPopover",
+  "handle": "eek-tooltip-popover",
+  "style": "css/tooltip-popover.css",
+  "script": "js/tooltip-popover.js"
+}
