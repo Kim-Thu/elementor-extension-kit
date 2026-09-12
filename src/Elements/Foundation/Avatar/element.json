@@ -1,0 +1,7 @@
+{
+  "id": "avatar",
+  "name": "Avatar",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\Avatar\\Avatar",
+  "handle": "eek-avatar",
+  "style": "css/avatar.css"
+}
