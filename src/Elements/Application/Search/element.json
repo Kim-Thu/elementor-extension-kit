@@ -1,0 +1,7 @@
+{
+  "id": "search",
+  "name": "Search",
+  "class": "ElementorExtensionKit\\Elements\\Application\\Search\\Search",
+  "handle": "eek-search",
+  "style": "css/search.css"
+}
