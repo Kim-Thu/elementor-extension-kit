@@ -1,0 +1,5 @@
+{
+  "name": "eek-info-box",
+  "class": "ElementorExtensionKit\\Elements\\Content\\InfoBox\\InfoBox",
+  "styles": ["css/info-box.css"]
+}
