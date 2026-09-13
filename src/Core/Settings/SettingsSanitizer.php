@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace ElementorExtensionKit\Core\Settings;
 
+use ElementorExtensionKit\Elementor\ElementDefaultResolver;
+use ElementorExtensionKit\Elementor\ElementManifestRepository;
+
 final class SettingsSanitizer
 {
     private const DESIGN_KEYS = [
@@ -38,7 +41,7 @@ final class SettingsSanitizer
         }
 
         if (isset($input['elements']) && is_array($input['elements'])) {
-            $output['elements'] = self::sanitizeNestedMap($input['elements']);
+            $output['elements'] = self::sanitizeElementDefaults($input['elements']);
         }
 
         if (isset($input['templates']) && is_array($input['templates'])) {
@@ -83,19 +86,30 @@ final class SettingsSanitizer
      * @param array<mixed> $values
      * @return array<string, array<string, scalar>>
      */
-    private static function sanitizeNestedMap(array $values): array
+    private static function sanitizeElementDefaults(array $values): array
     {
+        $schemas = ElementManifestRepository::globalDefaults();
         $output = [];
-        foreach ($values as $owner => $settings) {
-            $safeOwner = sanitize_key((string) $owner);
-            if ($safeOwner === '' || ! is_array($settings)) {
+
+        foreach ($values as $elementId => $settings) {
+            $safeElementId = sanitize_key((string) $elementId);
+            if ($safeElementId === '' || ! is_array($settings) || ! isset($schemas[$safeElementId])) {
                 continue;
             }
-            $clean = self::sanitizeMap($settings);
-            if ($clean !== []) {
-                $output[$safeOwner] = $clean;
+
+            foreach ($settings as $key => $value) {
+                $safeKey = sanitize_key((string) $key);
+                $schema = $schemas[$safeElementId][$safeKey] ?? null;
+                if (! is_array($schema) || $value === 'inherit' || $value === 'default') {
+                    continue;
+                }
+                $clean = self::sanitizeScalar($value);
+                if ($clean !== null && ElementDefaultResolver::isAllowed($schema, $clean)) {
+                    $output[$safeElementId][$safeKey] = $clean;
+                }
             }
         }
+
         return $output;
     }
 
