@@ -14,5 +14,9 @@
         "overlay": "Overlay"
       }
     }
-  }
+  },
+  "templates": [
+    {"id": "default", "name": "Default", "file": "templates/cardDefault.php", "modes": ["default"]},
+    {"id": "overlay", "name": "Overlay", "file": "templates/cardOverlay.php", "modes": ["overlay"]}
+  ]
 }
