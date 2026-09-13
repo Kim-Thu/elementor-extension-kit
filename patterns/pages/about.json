@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.about","type":"page","title":"About",
+  "purpose":"Reusable company/team story page composed from existing blocks and collection elements.",
+  "dependencies":{"native":["Container","Heading","Text Editor","Image"],"eek":["team-grid","timeline"],"patterns":["block.hero","block.stats-section","block.testimonials-section","block.cta-section","block.footer"]},
+  "regions":[{"id":"intro","pattern":"block.hero"},{"id":"story","components":["heading","rich-copy","image?"]},{"id":"metrics","pattern":"block.stats-section"},{"id":"timeline","components":["timeline"]},{"id":"team","components":["heading","team-grid"]},{"id":"proof","pattern":"block.testimonials-section"},{"id":"cta","pattern":"block.cta-section"},{"id":"footer","pattern":"block.footer"}],
+  "responsive":{"rule":"Narrative source order remains stable; media never changes semantic order."},
+  "accessibility":["One page-level H1.","Team/timeline section headings provide context before collections.","Meaningful imagery has useful alternative text."],
+  "variants":["company-story","team-led","milestone-led"]
+}
