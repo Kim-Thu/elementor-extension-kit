@@ -6,6 +6,7 @@ namespace ElementorExtensionKit\Core\Admin;
 
 use ElementorExtensionKit\Core\Plugin;
 use ElementorExtensionKit\Core\Settings\ConfigurationDiagnostics;
+use ElementorExtensionKit\Elementor\ElementorGlobalSource;
 
 final class GlobalSettingsPage
 {
@@ -132,17 +133,19 @@ final class GlobalSettingsPage
 
     private static function renderDesignSystem(): void
     {
+        $ownership = ElementorGlobalSource::ownership();
+
         echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
         SettingsControls::field(
             __('Global Colors & Typography', 'elementor-extension-kit'),
-            __('Use Elementor Site Settings as the source of truth.', 'elementor-extension-kit'),
-            static function (): void {
+            __('Use the active Elementor Kit as the source of truth. EEK never creates a second color or font store.', 'elementor-extension-kit'),
+            static function () use ($ownership): void {
                 printf(
                     '<a class="button button-secondary" href="%s">%s</a>',
-                    esc_url(admin_url('post.php?post=elementor-active-kit&action=elementor')),
+                    esc_url(ElementorGlobalSource::siteSettingsUrl()),
                     esc_html__('Open Elementor Site Settings', 'elementor-extension-kit')
                 );
-                EffectiveConfiguration::renderState('elementor', __('Native source', 'elementor-extension-kit'));
+                EffectiveConfiguration::renderState('elementor', implode(' · ', array_values($ownership)));
             }
         );
         SettingsControls::field(
