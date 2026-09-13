@@ -26,6 +26,16 @@ final class SettingsStore
         return update_option(SettingsSchema::OPTION_NAME, $clean, false);
     }
 
+    /**
+     * @param array<string, mixed> $partial
+     */
+    public static function updatePartial(array $partial): bool
+    {
+        $merged = array_replace_recursive(self::get(), $partial);
+
+        return self::update($merged);
+    }
+
     public static function reset(): bool
     {
         return delete_option(SettingsSchema::OPTION_NAME);
