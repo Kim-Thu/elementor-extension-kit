@@ -8,6 +8,15 @@
     --eek-color-text-muted: color-mix(in srgb, currentColor 68%, transparent);
     --eek-color-border: color-mix(in srgb, currentColor 18%, transparent);
     --eek-color-focus: var(--eek-color-accent, currentColor);
+    --eek-color-inverse-surface: #1f2933;
+    --eek-color-inverse-text: #ffffff;
+    --eek-color-overlay: rgb(0 0 0 / 0.55);
+    --eek-color-success: #176b3a;
+    --eek-color-success-surface: #e8f7ee;
+    --eek-color-warning: #7a5500;
+    --eek-color-warning-surface: #fff5d6;
+    --eek-color-danger: #9d2929;
+    --eek-color-danger-surface: #fdecec;
 
     --eek-font-primary: var(--e-global-typography-primary-font-family, inherit);
     --eek-font-secondary: var(--e-global-typography-secondary-font-family, inherit);
