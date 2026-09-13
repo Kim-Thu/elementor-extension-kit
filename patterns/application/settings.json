@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"application.settings","type":"application","title":"Settings",
+  "purpose":"Reusable settings-page composition around real controls/providers without fake persistence.",
+  "dependencies":{"native":["Container","Form/provider controls"],"eek":["page-header","app-navigation","empty-state","loading-state"],"patterns":["application.app-shell"]},
+  "regions":[{"id":"shell","pattern":"application.app-shell"},{"id":"settings-nav","components":["app-navigation?"]},{"id":"form-groups","components":["fieldset/group[]","provider-controls[]"]},{"id":"actions","components":["save-action","secondary-action?"]},{"id":"feedback","components":["native-alert/status?"]}],
+  "responsive":{"rule":"Labels/controls/actions keep DOM order; side navigation may stack before form groups."},
+  "accessibility":["Related controls use fieldset/legend or equivalent group naming.","Provider supplies labels, validation and persistence semantics.","Save/cancel actions remain keyboard reachable after the fields they affect."],
+  "variants":["account","preferences","workspace"]
+}
