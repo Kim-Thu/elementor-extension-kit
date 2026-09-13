@@ -36,6 +36,13 @@ final class GlobalSettingsPage
             [],
             Plugin::VERSION
         );
+        wp_enqueue_script(
+            'eek-global-settings',
+            Plugin::pluginUrl('assets/admin/global-settings.js'),
+            [],
+            Plugin::VERSION,
+            true
+        );
     }
 
     public static function render(): void
@@ -50,16 +57,13 @@ final class GlobalSettingsPage
         $status = isset($_GET['eek_status']) ? sanitize_key((string) wp_unslash($_GET['eek_status'])) : '';
 
         echo '<div class="wrap eek-settings">';
-        echo '<header class="eek-settings__header">';
-        echo '<div>';
+        echo '<header class="eek-settings__header"><div>';
         echo '<p class="eek-settings__eyebrow">' . esc_html__('Elementor Extension Kit', 'elementor-extension-kit') . '</p>';
         echo '<h1 class="eek-settings__title">' . esc_html__('Global Settings', 'elementor-extension-kit') . '</h1>';
         echo '<p class="eek-settings__lede">' . esc_html__('Configure once, inherit across the site. Keep local overrides only for deliberate exceptions.', 'elementor-extension-kit') . '</p>';
-        echo '</div>';
-        echo '</header>';
+        echo '</div></header>';
 
         self::renderStatus($status);
-
         echo '<div class="eek-settings__layout">';
         SettingsNavigation::render($current, self::PAGE_SLUG);
         echo '<main class="eek-settings__content">';
@@ -76,7 +80,6 @@ final class GlobalSettingsPage
             'reset' => __('EEK global settings reset to inheritance.', 'elementor-extension-kit'),
             default => '',
         };
-
         if ($message !== '') {
             printf('<p class="eek-settings__status" data-state="success" role="status">%s</p>', esc_html($message));
         }
@@ -84,8 +87,7 @@ final class GlobalSettingsPage
 
     private static function renderSectionHeader(string $title, string $description): void
     {
-        echo '<section class="eek-settings__section">';
-        echo '<div class="eek-settings__section-head"><div>';
+        echo '<section class="eek-settings__section"><div class="eek-settings__section-head"><div>';
         printf('<h2 class="eek-settings__section-title">%s</h2>', esc_html($title));
         printf('<p class="eek-settings__section-copy">%s</p>', esc_html($description));
         echo '</div></div></section>';
@@ -96,7 +98,7 @@ final class GlobalSettingsPage
         match ($section) {
             'design-system' => DesignSystemPanel::render(),
             'elements' => ElementDefaultsPanel::render(),
-            'templates' => self::renderTemplates(),
+            'templates' => TemplateDefaultsPanel::render(),
             'regions' => self::renderRegions(),
             'diagnostics' => self::renderDiagnostics(),
             default => self::renderOverview(),
@@ -130,14 +132,6 @@ final class GlobalSettingsPage
         echo '</div></section>';
     }
 
-    private static function renderTemplates(): void
-    {
-        self::renderEmpty(
-            __('Template and layout defaults will appear here automatically.', 'elementor-extension-kit'),
-            __('Default keeps the element’s built-in/native rendering. Registered variants remain templates of the same element.', 'elementor-extension-kit')
-        );
-    }
-
     private static function renderRegions(): void
     {
         self::renderEmpty(
@@ -149,15 +143,12 @@ final class GlobalSettingsPage
     private static function renderDiagnostics(): void
     {
         $diagnostics = ConfigurationDiagnostics::inspect();
-
         echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
         SettingsControls::field(
             __('Settings schema', 'elementor-extension-kit'),
             __('Versioned contract used by all Phase 5 settings.', 'elementor-extension-kit'),
             static function () use ($diagnostics): void {
-                $label = $diagnostics['schema_current']
-                    ? __('Current', 'elementor-extension-kit')
-                    : __('Needs migration', 'elementor-extension-kit');
+                $label = $diagnostics['schema_current'] ? __('Current', 'elementor-extension-kit') : __('Needs migration', 'elementor-extension-kit');
                 SettingsControls::badge($label, $diagnostics['schema_current'] ? 'native' : 'warning');
                 EffectiveConfiguration::renderPreview([
                     __('Element overrides', 'elementor-extension-kit') => (string) $diagnostics['element_overrides'],
