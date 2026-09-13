@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.contact-section","type":"block","title":"Contact Section",
+  "purpose":"Combine contact information with a real form provider without implementing submission logic.",
+  "dependencies":{"native":["Container","Heading","Text Editor","Form provider","Icon List?","Map?"],"eek":["info-box"]},
+  "regions":[{"id":"intro","components":["heading","body?"]},{"id":"contact-details","components":["address/contact-links/info-box[]"]},{"id":"form","components":["provider-form"]}],
+  "responsive":{"desktop":"details/form may use two columns","mobile":"intro then details then form; keep label/input order intact"},
+  "accessibility":["Telephone/email addresses use appropriate link schemes where interactive.","Form provider must supply programmatic labels, errors and keyboard operation.","Do not replace provider validation/submission logic."],
+  "variants":["split","form-first","details-first"]
+}
