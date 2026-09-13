@@ -8,6 +8,39 @@
     --eek-font-secondary: var(--e-global-typography-secondary-font-family, inherit);
     --eek-font-text: var(--e-global-typography-text-font-family, inherit);
     --eek-font-accent: var(--e-global-typography-accent-font-family, inherit);
+
+    --eek-space-1: 0.25rem;
+    --eek-space-2: 0.5rem;
+    --eek-space-3: 0.75rem;
+    --eek-space-4: 1rem;
+    --eek-space-5: 1.25rem;
+    --eek-space-6: 1.5rem;
+    --eek-space-8: 2rem;
+    --eek-space-10: 2.5rem;
+    --eek-space-12: 3rem;
+    --eek-space-16: 4rem;
+    --eek-space-section: var(--eek-space-16);
+
+    --eek-radius-sm: 0.25rem;
+    --eek-radius-md: 0.5rem;
+    --eek-radius-lg: 1rem;
+    --eek-radius-pill: 999px;
+
+    --eek-border-width: 1px;
+    --eek-border-style: solid;
+    --eek-border-color: color-mix(in srgb, currentColor 18%, transparent);
+
+    --eek-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
+    --eek-shadow-md: 0 6px 20px rgb(0 0 0 / 0.10);
+    --eek-shadow-lg: 0 18px 48px rgb(0 0 0 / 0.14);
+
+    --eek-component-gap: var(--eek-space-4);
+    --eek-component-padding: var(--eek-space-6);
+    --eek-component-radius: var(--eek-radius-md);
+    --eek-card-gap: var(--eek-component-gap);
+    --eek-card-padding: var(--eek-component-padding);
+    --eek-card-radius: var(--eek-component-radius);
+    --eek-card-shadow: var(--eek-shadow-sm);
 }
 
 :where([class^="eek-"], [class*=" eek-"]) {
