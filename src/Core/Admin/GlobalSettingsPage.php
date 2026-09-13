@@ -32,7 +32,6 @@ final class GlobalSettingsPage
         $sections = SettingsNavigation::sections();
         $section = $sections[$current];
         $status = isset($_GET['eek_status']) ? sanitize_key((string) wp_unslash($_GET['eek_status'])) : '';
-
         echo '<div class="wrap eek-settings"><header class="eek-settings__header"><div>';
         echo '<p class="eek-settings__eyebrow">' . esc_html__('Elementor Extension Kit', 'elementor-extension-kit') . '</p>';
         echo '<h1 class="eek-settings__title">' . esc_html__('Global Settings', 'elementor-extension-kit') . '</h1>';
@@ -72,7 +71,7 @@ final class GlobalSettingsPage
             'design-system' => DesignSystemPanel::render(),
             'elements' => ElementDefaultsPanel::render(),
             'templates' => TemplateDefaultsPanel::render(),
-            'regions' => self::renderRegions(),
+            'regions' => SiteRegionsPanel::render(),
             'diagnostics' => self::renderDiagnostics(),
             default => self::renderOverview(),
         };
@@ -89,11 +88,6 @@ final class GlobalSettingsPage
         echo '</div></section>';
     }
 
-    private static function renderRegions(): void
-    {
-        self::renderEmpty(__('Header and Footer assignments are not configured yet.', 'elementor-extension-kit'), __('Leaving a region on Default preserves Elementor/theme behavior.', 'elementor-extension-kit'));
-    }
-
     private static function renderDiagnostics(): void
     {
         $diagnostics = ConfigurationDiagnostics::inspect();
@@ -108,7 +102,7 @@ final class GlobalSettingsPage
             if ($invalid === []) { SettingsControls::badge(__('Healthy', 'elementor-extension-kit'), 'native'); return; }
             foreach ($invalid as $elementId => $templateId) {
                 echo '<div class="eek-notice"><strong>' . esc_html((string) $elementId) . '</strong>: ' . esc_html((string) $templateId);
-                echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" style="margin-top:8px">';
+                echo '<form class="eek-reset-form" method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
                 echo '<input type="hidden" name="action" value="eek_reset_template"><input type="hidden" name="element_id" value="' . esc_attr((string) $elementId) . '">';
                 wp_nonce_field('eek_reset_template');
                 submit_button(__('Reset to native', 'elementor-extension-kit'), 'secondary', 'submit', false);
@@ -121,10 +115,5 @@ final class GlobalSettingsPage
             wp_nonce_field('eek_reset_global_settings'); submit_button(__('Reset EEK globals', 'elementor-extension-kit'), 'secondary', 'submit', false); echo '</form>';
         });
         echo '</div></section>';
-    }
-
-    private static function renderEmpty(string $title, string $description): void
-    {
-        echo '<section class="eek-settings__section"><div class="eek-empty"><h3>' . esc_html($title) . '</h3><p>' . esc_html($description) . '</p></div></section>';
     }
 }
