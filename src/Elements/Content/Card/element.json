@@ -4,17 +4,6 @@
   "class": "ElementorExtensionKit\\Elements\\Content\\Card\\Card",
   "handle": "eek-card",
   "style": "css/card.css",
-  "global_defaults": {
-    "layout": {
-      "label": "Layout",
-      "type": "select",
-      "default": "default",
-      "options": {
-        "default": "Default",
-        "overlay": "Overlay"
-      }
-    }
-  },
   "templates": [
     {"id": "default", "name": "Default", "file": "templates/cardDefault.php", "modes": ["default"]},
     {"id": "overlay", "name": "Overlay", "file": "templates/cardOverlay.php", "modes": ["overlay"]}
