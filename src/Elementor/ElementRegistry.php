@@ -10,39 +10,14 @@ use ElementorExtensionKit\Core\Plugin;
 
 final class ElementRegistry
 {
-    /** @var array<int, string>|null */
-    private static ?array $manifestPaths = null;
-
-    /** @var array<string, array<string, mixed>> */
-    private static array $manifestCache = [];
-
-    /**
-     * @return array<int, string>
-     */
-    private static function manifests(): array
-    {
-        if (self::$manifestPaths !== null) {
-            return self::$manifestPaths;
-        }
-
-        self::$manifestPaths = glob(dirname(__DIR__) . '/Elements/*/*/element.json') ?: [];
-
-        return self::$manifestPaths;
-    }
-
     public static function registerWidgets(Widgets_Manager $widgetsManager): void
     {
-        foreach (self::manifests() as $manifestPath) {
-            $manifest = self::readManifest($manifestPath);
-
-            if (! self::hasRequiredContract($manifest)) {
-                continue;
-            }
-
+        foreach (ElementManifestRepository::all() as $manifest) {
             $class = $manifest['class'];
 
             if (
-                ! str_starts_with($class, 'ElementorExtensionKit\\Elements\\')
+                ! is_string($class)
+                || ! str_starts_with($class, 'ElementorExtensionKit\\Elements\\')
                 || ! class_exists($class)
                 || ! is_subclass_of($class, Widget_Base::class)
             ) {
@@ -57,20 +32,18 @@ final class ElementRegistry
     {
         $seenHandles = [];
 
-        foreach (self::manifests() as $manifestPath) {
-            $manifest = self::readManifest($manifestPath);
-
-            if (! self::hasRequiredContract($manifest)) {
-                continue;
-            }
-
+        foreach (ElementManifestRepository::all() as $manifest) {
             $handle = $manifest['handle'];
-
-            if (isset($seenHandles[$handle])) {
+            if (! is_string($handle) || isset($seenHandles[$handle])) {
                 continue;
             }
 
             $seenHandles[$handle] = true;
+            $manifestPath = isset($manifest['_path']) && is_string($manifest['_path']) ? $manifest['_path'] : '';
+            if ($manifestPath === '') {
+                continue;
+            }
+
             $directory = dirname($manifestPath);
             $relativeDirectory = ltrim(str_replace(dirname(__DIR__, 2), '', $directory), '/\\');
             $style = self::resolveLocalAsset($directory, $manifest['style'] ?? null);
@@ -95,41 +68,6 @@ final class ElementRegistry
                 );
             }
         }
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private static function readManifest(string $path): array
-    {
-        if (isset(self::$manifestCache[$path])) {
-            return self::$manifestCache[$path];
-        }
-
-        $contents = file_get_contents($path);
-
-        if ($contents === false) {
-            return self::$manifestCache[$path] = [];
-        }
-
-        $decoded = json_decode($contents, true);
-
-        return self::$manifestCache[$path] = is_array($decoded) ? $decoded : [];
-    }
-
-    /**
-     * @param array<string, mixed> $manifest
-     */
-    private static function hasRequiredContract(array $manifest): bool
-    {
-        foreach (['id', 'name', 'class', 'handle'] as $field) {
-            if (! isset($manifest[$field]) || ! is_string($manifest[$field]) || $manifest[$field] === '') {
-                return false;
-            }
-        }
-
-        return preg_match('/^[a-z][a-z0-9-]*$/', $manifest['id']) === 1
-            && preg_match('/^eek-[a-z0-9-]+$/', $manifest['handle']) === 1;
     }
 
     private static function resolveLocalAsset(string $moduleDirectory, mixed $path): ?string
