@@ -32,6 +32,7 @@ final class Plugin
         add_action('admin_menu', [GlobalSettingsPage::class, 'registerMenu']);
         add_action('admin_enqueue_scripts', [GlobalSettingsPage::class, 'enqueueAssets']);
         add_action('admin_post_eek_save_global_settings', [SettingsController::class, 'save']);
+        add_action('admin_post_eek_reset_global_settings', [SettingsController::class, 'resetAll']);
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
         add_action('wp_enqueue_scripts', [self::class, 'enqueueDesignSystemStyles']);
