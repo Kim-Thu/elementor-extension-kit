@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.stats-section","type":"block","title":"Stats Section",
+  "purpose":"Present a concise group of metrics or proof points.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["stat"]},
+  "regions":[{"id":"intro","components":["heading?","body?"]},{"id":"metrics","components":["stat[]"],"notes":"Use native Grid/Container; preserve metric DOM order."}],
+  "responsive":{"desktop":"2-4 columns","mobile":"single or two-column flow without CSS order changes"},
+  "accessibility":["Each metric keeps its accessible label/context.","Do not encode meaning by number styling alone."],
+  "variants":["compact","bordered","editorial"]
+}
