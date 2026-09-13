@@ -95,7 +95,7 @@ final class GlobalSettingsPage
     {
         match ($section) {
             'design-system' => DesignSystemPanel::render(),
-            'elements' => self::renderElements(),
+            'elements' => ElementDefaultsPanel::render(),
             'templates' => self::renderTemplates(),
             'regions' => self::renderRegions(),
             'diagnostics' => self::renderDiagnostics(),
@@ -128,14 +128,6 @@ final class GlobalSettingsPage
             }
         );
         echo '</div></section>';
-    }
-
-    private static function renderElements(): void
-    {
-        self::renderEmpty(
-            __('Element defaults will appear here automatically.', 'elementor-extension-kit'),
-            __('Only presentation controls explicitly exposed by each element are eligible. Content and query data stay local.', 'elementor-extension-kit')
-        );
     }
 
     private static function renderTemplates(): void
