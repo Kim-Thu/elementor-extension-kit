@@ -99,6 +99,7 @@ final class DesignSystemPanel
             'border' => __('Borders', 'elementor-extension-kit'),
             'shadow' => __('Elevation', 'elementor-extension-kit'),
             'surface' => __('Surfaces', 'elementor-extension-kit'),
+            'motion' => __('Motion', 'elementor-extension-kit'),
             default => ucfirst($group),
         };
     }
@@ -111,6 +112,7 @@ final class DesignSystemPanel
             'border' => __('Set the shared structural border weight.', 'elementor-extension-kit'),
             'shadow' => __('Choose a consistent default elevation without writing custom CSS.', 'elementor-extension-kit'),
             'surface' => __('Tune subtle background contrast used by muted surfaces.', 'elementor-extension-kit'),
+            'motion' => __('Set one site-wide motion policy. Reduced-motion preferences always take precedence.', 'elementor-extension-kit'),
             default => '',
         };
     }

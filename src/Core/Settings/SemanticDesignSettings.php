@@ -31,6 +31,11 @@ final class SemanticDesignSettings
             'surface' => [
                 'muted_strength' => ['label' => __('Muted surface strength', 'elementor-extension-kit'), 'min' => 0, 'max' => 16, 'step' => 1, 'default' => 4, 'unit' => '%'],
             ],
+            'motion' => [
+                'mode' => ['label' => __('Motion mode', 'elementor-extension-kit'), 'type' => 'select', 'default' => 'standard', 'options' => ['standard' => __('Standard', 'elementor-extension-kit'), 'subtle' => __('Subtle', 'elementor-extension-kit'), 'none' => __('None', 'elementor-extension-kit')]],
+                'duration' => ['label' => __('Default duration', 'elementor-extension-kit'), 'min' => 0, 'max' => 1200, 'step' => 10, 'default' => 220, 'unit' => 'ms'],
+                'easing' => ['label' => __('Default easing', 'elementor-extension-kit'), 'type' => 'select', 'default' => 'standard', 'options' => ['standard' => __('Standard', 'elementor-extension-kit'), 'emphasized' => __('Emphasized', 'elementor-extension-kit'), 'linear' => __('Linear', 'elementor-extension-kit')]],
+            ],
         ];
     }
 }
