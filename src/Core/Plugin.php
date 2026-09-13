@@ -9,6 +9,7 @@ use ElementorExtensionKit\Core\Admin\GlobalSettingsPage;
 use ElementorExtensionKit\Core\Admin\SettingsController;
 use ElementorExtensionKit\Core\Settings\GlobalStyleEmitter;
 use ElementorExtensionKit\Elementor\ElementRegistry;
+use ElementorExtensionKit\Elementor\SiteRegionLocationBridge;
 
 final class Plugin
 {
@@ -33,6 +34,7 @@ final class Plugin
         add_action('admin_post_eek_reset_global_settings', [SettingsController::class, 'resetAll']);
         add_action('switch_theme', [SiteContextRefresh::class, 'onThemeSwitch']);
         add_action('update_option_elementor_active_kit', [SiteContextRefresh::class, 'onKitChange'], 10, 2);
+        add_filter('elementor/theme/get_location_templates/template_id', [SiteRegionLocationBridge::class, 'filterTemplateId'], 10, 2);
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
         add_action('wp_enqueue_scripts', [self::class, 'enqueueDesignSystemStyles']);
