@@ -25,15 +25,14 @@ final class Plugin
 
     public static function init(): void
     {
-        if (! did_action('elementor/loaded')) {
-            return;
-        }
-
+        if (! did_action('elementor/loaded')) { return; }
         add_action('admin_menu', [GlobalSettingsPage::class, 'registerMenu']);
         add_action('admin_enqueue_scripts', [GlobalSettingsPage::class, 'enqueueAssets']);
         add_action('admin_post_eek_save_global_settings', [SettingsController::class, 'save']);
         add_action('admin_post_eek_reset_template', [SettingsController::class, 'resetTemplate']);
         add_action('admin_post_eek_reset_global_settings', [SettingsController::class, 'resetAll']);
+        add_action('switch_theme', [SiteContextRefresh::class, 'onThemeSwitch']);
+        add_action('update_option_elementor_active_kit', [SiteContextRefresh::class, 'onKitChange'], 10, 2);
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
         add_action('wp_enqueue_scripts', [self::class, 'enqueueDesignSystemStyles']);
@@ -43,10 +42,7 @@ final class Plugin
 
     public static function registerElementCategories(Elements_Manager $elementsManager): void
     {
-        $elementsManager->add_category(self::ELEMENT_CATEGORY, [
-            'title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'),
-            'icon' => 'eicon-apps',
-        ]);
+        $elementsManager->add_category(self::ELEMENT_CATEGORY, ['title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'), 'icon' => 'eicon-apps']);
     }
 
     public static function enqueueDesignSystemStyles(): void
@@ -54,9 +50,7 @@ final class Plugin
         $handle = 'eek-design-system';
         wp_enqueue_style($handle, self::pluginUrl('assets/frontend/design-system.css'), [], self::VERSION);
         $globalCss = GlobalStyleEmitter::css();
-        if ($globalCss !== '') {
-            wp_add_inline_style($handle, $globalCss);
-        }
+        if ($globalCss !== '') { wp_add_inline_style($handle, $globalCss); }
     }
 
     public static function enqueueEditorStyles(): void
@@ -64,9 +58,7 @@ final class Plugin
         $handle = 'eek-elementor-editor';
         wp_enqueue_style($handle, self::pluginUrl('assets/editor/elementor-editor.css'), [], self::VERSION);
         $brandMarkPath = dirname(self::$pluginFile) . '/assets/editor/brand-mark.svg';
-        if (! is_readable($brandMarkPath)) {
-            return;
-        }
+        if (! is_readable($brandMarkPath)) { return; }
         $brandMarkUrl = self::pluginUrl('assets/editor/brand-mark.svg');
         wp_add_inline_style($handle, sprintf(':root{--eek-editor-brand-mark-image:url("%s");}', esc_url_raw($brandMarkUrl)));
     }

@@ -39,17 +39,21 @@ final class SiteRegionsPanel
 
         $value = is_numeric($stored) ? (string) (int) $stored : 'default';
         $effective = SiteRegionAssignmentResolver::resolve($region);
+        $stale = $value !== 'default' && $effective === null;
 
         echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
         SettingsControls::field(
             $label,
             __('Choose a saved Elementor region template once, or keep native theme/Elementor behavior untouched.', 'elementor-extension-kit'),
-            static function () use ($region, $options, $value, $effective): void {
+            static function () use ($region, $options, $value, $effective, $stale): void {
                 SettingsControls::select('eek[regions][' . $region . ']', 'eek-region-' . $region, $options, $value);
                 EffectiveConfiguration::renderState(
                     $effective === null ? 'default' : 'eek-global',
                     $effective === null ? __('Elementor / theme native', 'elementor-extension-kit') : (string) ($options[(string) $effective] ?? $effective)
                 );
+                if ($stale) {
+                    SettingsControls::notice(__('The previously assigned template is no longer compatible. Native behavior is active until you save a new selection.', 'elementor-extension-kit'));
+                }
             }
         );
         echo '</div></section>';
