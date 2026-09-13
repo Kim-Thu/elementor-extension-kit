@@ -7,6 +7,9 @@ namespace ElementorExtensionKit\Elements\Content\Testimonial;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 use ElementorExtensionKit\Core\Plugin;
+use ElementorExtensionKit\Elementor\ElementInstanceInheritance;
+use ElementorExtensionKit\Elementor\ElementTemplateRegistry;
+use ElementorExtensionKit\Elementor\ElementTemplateResolver;
 
 final class Testimonial extends Widget_Base
 {
@@ -19,6 +22,22 @@ final class Testimonial extends Widget_Base
     protected function register_controls(): void
     {
         $this->start_controls_section('content', ['label' => esc_html__('Content', 'elementor-extension-kit')]);
+        $this->add_control('template_source', [
+            'label' => esc_html__('Template source', 'elementor-extension-kit'),
+            'type' => Controls_Manager::SELECT,
+            'default' => ElementInstanceInheritance::INHERIT,
+            'options' => [
+                ElementInstanceInheritance::INHERIT => esc_html__('Inherit global', 'elementor-extension-kit'),
+                ElementInstanceInheritance::OVERRIDE => esc_html__('Override locally', 'elementor-extension-kit'),
+            ],
+        ]);
+        $this->add_control('template_override', [
+            'label' => esc_html__('Template', 'elementor-extension-kit'),
+            'type' => Controls_Manager::SELECT,
+            'default' => 'default',
+            'options' => self::templateOptions(),
+            'condition' => ['template_source' => ElementInstanceInheritance::OVERRIDE],
+        ]);
         $this->add_control('quote', [
             'label' => esc_html__('Quote', 'elementor-extension-kit'),
             'type' => Controls_Manager::TEXTAREA,
@@ -60,9 +79,23 @@ final class Testimonial extends Widget_Base
             return;
         }
 
-        $template = __DIR__ . '/templates/testimonialDefault.php';
-        if (is_readable($template)) {
-            require $template;
+        $local = ElementInstanceInheritance::local($settings, 'template');
+        $template = ElementTemplateResolver::resolve('testimonial', $local['value'], $local['has_local']);
+        $path = is_array($template) && is_string($template['path'] ?? null)
+            ? $template['path']
+            : __DIR__ . '/templates/testimonialDefault.php';
+
+        if (is_readable($path)) {
+            require $path;
         }
+    }
+
+    private static function templateOptions(): array
+    {
+        $options = ['default' => esc_html__('Default / Native', 'elementor-extension-kit')];
+        foreach (ElementTemplateRegistry::forElement('testimonial') as $id => $template) {
+            $options[$id] = (string) ($template['name'] ?? $id);
+        }
+        return $options;
     }
 }
