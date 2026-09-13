@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.cta-section","type":"block","title":"CTA Section",
+  "purpose":"Focus attention on one primary next action with optional secondary path.",
+  "dependencies":{"native":["Container","Heading","Text Editor","Button"],"eek":[]},
+  "regions":[{"id":"copy","components":["heading","body?"]},{"id":"actions","components":["primary-action","secondary-action?"]}],
+  "responsive":{"desktop":"copy/actions may share a row","mobile":"copy precedes actions; actions stack/wrap in source order"},
+  "accessibility":["Use links for navigation and buttons for in-page actions.","Primary action remains first in focus order.","Section heading level follows host document hierarchy."],
+  "variants":["inline","centered","split"]
+}
