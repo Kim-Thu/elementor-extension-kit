@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.services","type":"page","title":"Services",
+  "purpose":"Reusable service offering page assembled from existing reusable blocks.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":[],"patterns":["block.hero","block.feature-section","block.testimonials-section","block.faq-section","block.cta-section","block.footer"]},
+  "regions":[{"id":"hero","pattern":"block.hero"},{"id":"services","pattern":"block.feature-section"},{"id":"proof","pattern":"block.testimonials-section"},{"id":"faq","pattern":"block.faq-section"},{"id":"cta","pattern":"block.cta-section"},{"id":"footer","pattern":"block.footer"}],
+  "responsive":{"rule":"Block order remains stable; feature and proof grids reflow locally."},
+  "accessibility":["One page-level H1.","Service links have distinct purpose text.","FAQ keeps Accordion keyboard/ARIA contract."],
+  "variants":["consulting","agency","productized-service"]
+}
