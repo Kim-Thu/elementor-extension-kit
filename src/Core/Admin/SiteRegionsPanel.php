@@ -21,6 +21,7 @@ final class SiteRegionsPanel
         wp_nonce_field('eek_save_global_settings');
 
         self::renderRegion('header', __('Header', 'elementor-extension-kit'), $regions['header'] ?? null);
+        self::renderRegion('footer', __('Footer', 'elementor-extension-kit'), $regions['footer'] ?? null);
 
         echo '<div class="eek-settings__actions">';
         EffectiveConfiguration::renderDirtyStatus(false, __('Default leaves Elementor or the active theme in control.', 'elementor-extension-kit'));
