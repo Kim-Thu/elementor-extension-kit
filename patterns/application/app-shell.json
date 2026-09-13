@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"application.app-shell","type":"application","title":"App Shell",
+  "purpose":"Reusable application shell using native layout plus EEK navigation/header elements.",
+  "dependencies":{"native":["Container","Grid"],"eek":["app-navigation","page-header"]},
+  "regions":[{"id":"navigation","components":["app-navigation"],"slot":"sidebar-or-topbar"},{"id":"header","components":["page-header"]},{"id":"main","components":["content-slot"]}],
+  "responsive":{"desktop":"sidebar or top navigation variant through native layout","mobile":"navigation then header then main in logical source order; visual positioning must not alter focus order"},
+  "accessibility":["Navigation has a useful accessible label.","Main content heading context comes from Page Header.","Shell must not trap focus or introduce duplicate landmarks."],
+  "variants":["sidebar","topbar","compact"]
+}
