@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.dashboard","type":"page","title":"Dashboard",
+  "purpose":"Reusable dashboard page baseline composed from application/data elements and native layout.",
+  "dependencies":{"native":["Container","Grid"],"eek":["app-navigation","page-header","stat","data-table","activity-feed","filter-bar","active-filters","search","empty-state","loading-state"],"patterns":["application.app-shell","application.dashboard-layout"]},
+  "regions":[{"id":"shell","pattern":"application.app-shell"},{"id":"dashboard-content","pattern":"application.dashboard-layout"}],
+  "responsive":{"rule":"Navigation, header, filters, results and supporting activity preserve source/focus order during reflow."},
+  "accessibility":["Page Header provides the content heading context.","Filter/Search controls precede affected data.","Loading/empty states replace content semantically rather than overlaying unreachable controls."],
+  "variants":["analytics","operations","account"]
+}
