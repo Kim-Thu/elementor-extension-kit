@@ -1,6 +1,6 @@
 .eek-info-box {
     display: flex;
-    gap: 1rem;
+    gap: var(--eek-component-gap, var(--eek-space-4, 1rem));
     align-items: flex-start;
 }
 
@@ -18,6 +18,7 @@
     width: 3rem;
     height: 3rem;
     object-fit: cover;
+    border-radius: var(--eek-radius-sm, 0.25rem);
 }
 
 .eek-info-box__content {
@@ -25,7 +26,7 @@
 }
 
 .eek-info-box__title {
-    margin: 0 0 0.5rem;
+    margin: 0 0 var(--eek-space-2, 0.5rem);
 }
 
 .eek-info-box__text > :first-child {
@@ -38,5 +39,5 @@
 
 .eek-info-box__link {
     display: inline-block;
-    margin-top: 0.75rem;
+    margin-top: var(--eek-space-3, 0.75rem);
 }
