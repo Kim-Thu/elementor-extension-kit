@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.footer","type":"block","title":"Footer",
+  "purpose":"Provide reusable site footer structure without a widget-per-layout implementation.",
+  "dependencies":{"native":["Container","Heading","Text Editor","Social Icons"],"eek":["app-navigation"]},
+  "regions":[{"id":"brand","components":["logo/brand","summary?","social-links?"]},{"id":"navigation","components":["app-navigation[]"]},{"id":"legal","components":["copyright","legal-links"]}],
+  "responsive":{"desktop":"brand/navigation columns plus legal row","mobile":"brand then navigation groups then legal content in source order"},
+  "accessibility":["Use a semantic footer landmark at implementation time.","Distinct navigation groups require useful accessible labels.","Link purpose must remain clear outside visual grouping."],
+  "variants":["columns","compact","brand-led"]
+}
