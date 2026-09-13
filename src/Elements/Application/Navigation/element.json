@@ -3,5 +3,16 @@
   "name": "App Navigation",
   "class": "ElementorExtensionKit\\Elements\\Application\\Navigation\\Navigation",
   "handle": "eek-app-navigation",
-  "style": "css/navigation.css"
+  "style": "css/navigation.css",
+  "global_defaults": {
+    "orientation": {
+      "label": "Orientation",
+      "type": "select",
+      "default": "vertical",
+      "options": {
+        "vertical": "Vertical / Sidebar",
+        "horizontal": "Horizontal / Top"
+      }
+    }
+  }
 }
