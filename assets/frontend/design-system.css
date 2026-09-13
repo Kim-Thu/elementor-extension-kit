@@ -47,6 +47,10 @@
     --eek-shadow-md: 0 6px 20px rgb(0 0 0 / 0.10);
     --eek-shadow-lg: 0 18px 48px rgb(0 0 0 / 0.14);
 
+    --eek-motion-duration: 220ms;
+    --eek-motion-easing: cubic-bezier(.2, 0, 0, 1);
+    --eek-motion-scale: 1;
+
     --eek-component-gap: var(--eek-space-4);
     --eek-component-padding: var(--eek-space-6);
     --eek-component-radius: var(--eek-radius-md);
@@ -68,4 +72,11 @@
 
 :where([class^="eek-"], [class*=" eek-"]) a {
     color: var(--eek-color-accent, currentColor);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --eek-motion-duration: 0ms;
+        --eek-motion-scale: 0;
+    }
 }
