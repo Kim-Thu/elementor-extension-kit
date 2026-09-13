@@ -40,3 +40,19 @@
 .eek-testimonial__role {
     display: block;
 }
+
+.eek-testimonial--compact .eek-testimonial__quote {
+    margin-bottom: var(--eek-space-3, 0.75rem);
+}
+
+.eek-testimonial__compact-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--eek-space-4, 1rem);
+}
+
+.eek-testimonial--compact .eek-testimonial__rating {
+    margin-bottom: 0;
+    flex: 0 0 auto;
+}
