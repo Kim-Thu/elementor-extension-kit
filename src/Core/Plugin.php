@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ElementorExtensionKit\Core;
 
 use Elementor\Elements_Manager;
+use ElementorExtensionKit\Core\Admin\GlobalSettingsPage;
 use ElementorExtensionKit\Elementor\ElementRegistry;
 
 final class Plugin
@@ -27,6 +28,8 @@ final class Plugin
             return;
         }
 
+        add_action('admin_menu', [GlobalSettingsPage::class, 'registerMenu']);
+        add_action('admin_enqueue_scripts', [GlobalSettingsPage::class, 'enqueueAssets']);
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
         add_action('wp_enqueue_scripts', [self::class, 'enqueueDesignSystemStyles']);
