@@ -12,14 +12,14 @@ EEK must not create a second Global Colors or Global Fonts settings system.
 
 | Property | Source of truth | EEK rule |
 | --- | --- | --- |
-| Brand/global colors | Elementor Global Colors | Consume Elementor globals; local widget override may win when explicitly set. |
-| Global typography | Elementor Global Fonts / Theme Style | Consume Elementor globals; do not duplicate font catalogs in EEK. |
-| Native layout settings | Elementor Site Settings when applicable | Reuse the native setting before adding an EEK token. |
-| Spacing semantics | EEK gap tokens | Use only for reusable section/component spacing not already owned by Elementor. |
-| Radius semantics | EEK gap tokens | Provide reusable radius scale and component fallbacks. |
-| Shadow/elevation | EEK gap tokens | Provide reusable elevation semantics. |
-| Border semantics | EEK gap tokens | Provide reusable border width/style/color fallbacks. |
-| Component metrics | EEK gap tokens | Add only after repeated real use across elements/compositions. |
+| Brand/global colors | Elementor Global Colors | Consume Elementor globals; explicit local widget override may win. |
+| Global typography | Elementor Global Fonts / Theme Style | Consume Elementor globals; do not duplicate font catalogs. |
+| Native layout settings | Elementor Site Settings when applicable | Reuse native settings before adding EEK semantics. |
+| Spacing semantics | EEK gap tokens | Reusable section/component spacing not already owned by Elementor. |
+| Radius semantics | EEK gap tokens | Reusable radius scale and component fallbacks. |
+| Shadow/elevation | EEK gap tokens | Reusable elevation semantics. |
+| Border/surface/state semantics | EEK gap tokens | Reusable neutral/state presentation with safe defaults. |
+| Component metrics | EEK gap tokens | Add only after real reusable semantics exist. |
 
 ## Precedence
 
@@ -29,54 +29,77 @@ EEK must not create a second Global Colors or Global Fonts settings system.
 4. EEK semantic token.
 5. EEK primitive/default fallback.
 
-A local element style must not hard-code a global visual constant when the same property belongs to this contract.
+A module must not hard-code a global visual constant when the same property belongs to this contract.
 
-## CSS variable contract
+## Runtime contract
 
-EEK variables use the `--eek-*` prefix. Elementor-owned colors/fonts are referenced through Elementor's global variables where available. EEK semantic-gap variables must remain lightweight CSS custom properties; no runtime JavaScript resolver or separate settings engine is allowed solely for token resolution.
+The shared frontend stylesheet is `assets/frontend/design-system.css`, enqueued as `eek-design-system` before module styles. It bridges Elementor global CSS variables into EEK and defines lightweight `--eek-*` gap tokens. No PHP/JavaScript token resolver or separate design-settings database is required.
 
-Recommended hierarchy:
+Examples:
 
 ```css
 :root {
-    --eek-space-1: 0.25rem;
-    --eek-space-2: 0.5rem;
-    --eek-space-3: 0.75rem;
+    --eek-color-primary: var(--e-global-color-primary, currentColor);
+    --eek-font-primary: var(--e-global-typography-primary-font-family, inherit);
     --eek-space-4: 1rem;
-    --eek-space-6: 1.5rem;
-    --eek-space-8: 2rem;
-    --eek-radius-sm: 0.25rem;
     --eek-radius-md: 0.5rem;
-    --eek-radius-lg: 1rem;
+    --eek-component-gap: var(--eek-space-4);
+    --eek-card-radius: var(--eek-radius-md);
 }
 
 .eek-card {
-    gap: var(--eek-card-gap, var(--eek-space-4));
+    gap: var(--eek-card-gap, var(--eek-component-gap));
     border-radius: var(--eek-card-radius, var(--eek-radius-md));
 }
 ```
 
-## Elementor global integration
+## Elementor controls
 
-When an EEK widget exposes an Elementor color or typography control, it should use Elementor's native `global` control contract when the value represents a site-level semantic such as primary, secondary, text or accent. Explicit local overrides remain valid and take precedence through Elementor itself.
+When an EEK widget genuinely exposes a color or typography style control, use Elementor's native global-style control contract/reference for site-level semantics such as primary, secondary, text or accent. Do not add a style control merely so a widget can participate in globals; widgets without such controls inherit through the CSS bridge.
 
-Widgets that do not expose style controls should inherit site/global values through CSS rather than adding controls only to simulate a design system.
+Explicit local Elementor overrides remain valid and take precedence through Elementor itself.
+
+## EEK semantic-gap tokens
+
+Use `--eek-*` for reusable gaps such as spacing, radius, shadow/elevation, border, neutral surface/state and component metrics. A component token should fall back to a semantic token, which falls back to a primitive/default. Functional geometry such as aspect ratio, a required touch target, or a behavior-specific dimension does not need to become a global design token unless reuse proves it should.
 
 ## Composition inheritance
 
-Blocks, page patterns and application patterns are composition contracts. They do not own duplicated theme values. A composition may describe semantic intent, but its rendered elements inherit values from Elementor globals and EEK gap tokens.
+Blocks, page patterns and application patterns are composition contracts. They do not own duplicated theme values. A composition may describe semantic intent or a preset name, but rendered values inherit from Elementor globals and EEK gap tokens through its native/EKK elements.
+
+## Migration checklist
+
+For an existing or new element:
+
+- [ ] Identify whether each visual property is Elementor-owned, EEK-gap-owned, local/functional, or a legitimate explicit override.
+- [ ] Use Elementor globals for color/typography when applicable.
+- [ ] Use `--eek-*` semantics for reusable spacing/radius/shadow/border/surface/state values.
+- [ ] Keep functional dimensions local unless two or more consumers establish reusable semantics.
+- [ ] Preserve element-local CSS/JS ownership; do not create a shared service merely to resolve CSS variables.
+- [ ] Keep variants in presets/templates rather than creating widget-per-style classes.
+- [ ] Ensure block/page/application manifests do not embed brand colors, font families, radius scales or spacing scales.
+
+## Developer decision formula
+
+`Elementor native capability? → reuse it`
+
+`Visual-only variation? → preset/pattern`
+
+`Real reusable behavior? → element`
+
+`Reusable design gap not owned by Elementor? → --eek-* semantic token`
+
+`One-off functional value? → keep local`
 
 ## Anti-patterns
 
-- EEK Global Colors/Fonts panel that competes with Elementor Site Settings.
-- Copying brand colors or font families into each widget stylesheet.
+- EEK Global Colors/Fonts panel competing with Elementor Site Settings.
+- Copying brand colors or font families into every widget stylesheet.
+- Hard-coding reusable radius/spacing/shadow constants across modules.
 - Creating a PHP/JS token service when CSS cascade is sufficient.
 - Creating separate widgets for visual variants instead of presets/patterns.
-- Promoting a one-off spacing/radius value to a shared token before real reuse exists.
+- Promoting a one-off value to a shared token before real reuse exists.
 
-## Handoff
+## Phase 4 verification
 
-- #187 applies Elementor Global Colors/Fonts integration and a shared Elementor-to-EEK CSS bridge.
-- #188 adds/migrates semantic gap tokens for spacing, radius, shadow, border and reusable metrics.
-- #189 documents migration/governance and future-element rules.
-- #190 verifies the final contract end-to-end.
+#186 defines ownership. #187 supplies the Elementor bridge. #188 supplies semantic gap tokens and migrates element CSS. #189 locks these governance rules. #190 is the final technical gate.
