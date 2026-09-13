@@ -12,22 +12,27 @@ final class SettingsController
     {
         self::assertCapability();
         check_admin_referer('eek_save_global_settings');
-
-        $raw = isset($_POST['eek']) && is_array($_POST['eek'])
-            ? wp_unslash($_POST['eek'])
-            : [];
-
+        $raw = isset($_POST['eek']) && is_array($_POST['eek']) ? wp_unslash($_POST['eek']) : [];
         $updated = SettingsStore::updatePartial(is_array($raw) ? $raw : []);
         $section = isset($_POST['eek_section']) ? sanitize_key((string) wp_unslash($_POST['eek_section'])) : 'overview';
-
         self::redirect(SettingsNavigation::resolve($section), $updated ? 'saved' : 'unchanged');
+    }
+
+    public static function resetTemplate(): void
+    {
+        self::assertCapability();
+        check_admin_referer('eek_reset_template');
+        $elementId = isset($_POST['element_id']) ? sanitize_key((string) wp_unslash($_POST['element_id'])) : '';
+        if ($elementId !== '') {
+            SettingsStore::resetTemplate($elementId);
+        }
+        self::redirect('templates', 'reset');
     }
 
     public static function resetAll(): void
     {
         self::assertCapability();
         check_admin_referer('eek_reset_global_settings');
-
         SettingsStore::reset();
         self::redirect('diagnostics', 'reset');
     }
@@ -41,15 +46,11 @@ final class SettingsController
 
     private static function redirect(string $section, string $status): never
     {
-        $url = add_query_arg(
-            [
-                'page' => GlobalSettingsPage::PAGE_SLUG,
-                'section' => SettingsNavigation::resolve($section),
-                'eek_status' => sanitize_key($status),
-            ],
-            admin_url('admin.php')
-        );
-
+        $url = add_query_arg([
+            'page' => GlobalSettingsPage::PAGE_SLUG,
+            'section' => SettingsNavigation::resolve($section),
+            'eek_status' => sanitize_key($status),
+        ], admin_url('admin.php'));
         wp_safe_redirect($url);
         exit;
     }
