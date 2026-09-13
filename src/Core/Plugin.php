@@ -7,6 +7,7 @@ namespace ElementorExtensionKit\Core;
 use Elementor\Elements_Manager;
 use ElementorExtensionKit\Core\Admin\GlobalSettingsPage;
 use ElementorExtensionKit\Core\Admin\SettingsController;
+use ElementorExtensionKit\Core\Settings\GlobalStyleEmitter;
 use ElementorExtensionKit\Elementor\ElementRegistry;
 
 final class Plugin
@@ -53,12 +54,19 @@ final class Plugin
 
     public static function enqueueDesignSystemStyles(): void
     {
+        $handle = 'eek-design-system';
+
         wp_enqueue_style(
-            'eek-design-system',
+            $handle,
             self::pluginUrl('assets/frontend/design-system.css'),
             [],
             self::VERSION
         );
+
+        $globalCss = GlobalStyleEmitter::css();
+        if ($globalCss !== '') {
+            wp_add_inline_style($handle, $globalCss);
+        }
     }
 
     public static function enqueueEditorStyles(): void
