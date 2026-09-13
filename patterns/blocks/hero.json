@@ -1,0 +1,25 @@
+{
+  "schema": "eek.pattern/v1",
+  "id": "block.hero",
+  "type": "block",
+  "title": "Hero",
+  "purpose": "Primary page introduction with clear value proposition and actions.",
+  "dependencies": {
+    "native": ["Container", "Heading", "Text Editor", "Button", "Image"],
+    "eek": []
+  },
+  "regions": [
+    {"id": "copy", "components": ["eyebrow?", "h1", "body", "primary-action", "secondary-action?"], "notes": "Keep the H1 before actions in source order."},
+    {"id": "media", "components": ["image-or-video?"], "notes": "Decorative media uses empty alt; meaningful media requires useful alternative text."}
+  ],
+  "responsive": {
+    "desktop": "copy/media may use two columns",
+    "mobile": "copy precedes media; actions wrap without changing DOM order"
+  },
+  "accessibility": [
+    "One page-level H1 unless the host document explicitly requires otherwise.",
+    "Primary and secondary actions use links/buttons according to actual behavior.",
+    "Visual reordering must not contradict reading or focus order."
+  ],
+  "variants": ["split", "centered", "media-background"]
+}
