@@ -3,6 +3,11 @@
     --eek-color-secondary: var(--e-global-color-secondary, currentColor);
     --eek-color-text: var(--e-global-color-text, inherit);
     --eek-color-accent: var(--e-global-color-accent, currentColor);
+    --eek-color-surface: Canvas;
+    --eek-color-surface-muted: color-mix(in srgb, CanvasText 4%, Canvas);
+    --eek-color-text-muted: color-mix(in srgb, currentColor 68%, transparent);
+    --eek-color-border: color-mix(in srgb, currentColor 18%, transparent);
+    --eek-color-focus: var(--eek-color-accent, currentColor);
 
     --eek-font-primary: var(--e-global-typography-primary-font-family, inherit);
     --eek-font-secondary: var(--e-global-typography-secondary-font-family, inherit);
@@ -28,7 +33,6 @@
 
     --eek-border-width: 1px;
     --eek-border-style: solid;
-    --eek-border-color: color-mix(in srgb, currentColor 18%, transparent);
 
     --eek-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
     --eek-shadow-md: 0 6px 20px rgb(0 0 0 / 0.10);
