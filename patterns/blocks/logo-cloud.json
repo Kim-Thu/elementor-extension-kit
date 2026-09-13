@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.logo-cloud","type":"block","title":"Logo Cloud",
+  "purpose":"Present partner, customer or integration logos with optional context.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["logo-grid"]},
+  "regions":[{"id":"intro","components":["heading?","body?"]},{"id":"logos","components":["logo-grid"]}],
+  "responsive":{"desktop":"logo grid controls columns","mobile":"logo grid reflows without source reordering"},
+  "accessibility":["Meaningful logos require useful alternative text or labels.","Decorative repeated marks should not create duplicate announcements."],
+  "variants":["plain","framed","intro-left"]
+}
