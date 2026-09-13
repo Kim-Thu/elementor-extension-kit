@@ -1,0 +1,15 @@
+{
+  "schema":"eek.pattern/v1",
+  "id":"block.feature-section",
+  "type":"block",
+  "title":"Feature Section",
+  "purpose":"Introduce a grouped set of product/service features without duplicating card engines.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["info-box"]},
+  "regions":[
+    {"id":"intro","components":["eyebrow?","heading","body?"]},
+    {"id":"features","components":["info-box[]"],"notes":"Use native Grid/Container; cards follow DOM reading order."}
+  ],
+  "responsive":{"desktop":"2-4 column grid as content permits","mobile":"single-column source order"},
+  "accessibility":["Section heading precedes feature collection.","Do not repeat identical link text without context.","Visual order must match source order."],
+  "variants":["grid","alternating","icon-led"]
+}
