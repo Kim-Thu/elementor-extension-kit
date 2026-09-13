@@ -1,0 +1,7 @@
+{
+  "id": "chip-group",
+  "name": "Chip / Tag Group",
+  "class": "ElementorExtensionKit\\Elements\\Foundation\\ChipGroup\\ChipGroup",
+  "handle": "eek-chip-group",
+  "style": "css/chip-group.css"
+}
