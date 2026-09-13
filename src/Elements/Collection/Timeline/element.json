@@ -1,0 +1,7 @@
+{
+  "id": "timeline",
+  "name": "Timeline",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\Timeline\\Timeline",
+  "handle": "eek-timeline",
+  "style": "css/timeline.css"
+}
