@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.product","type":"page","title":"Product",
+  "purpose":"Reusable product-detail presentation around an existing ecommerce/product data provider.",
+  "dependencies":{"native":["Container","Heading","WooCommerce/product provider widgets"],"eek":["accordion","testimonial-grid"],"patterns":["block.testimonials-section","block.faq-section","block.footer"]},
+  "regions":[{"id":"product-summary","components":["provider-gallery","provider-title","provider-price","provider-rating?","provider-add-to-cart","provider-meta?"]},{"id":"details","components":["provider-description","accordion?" ]},{"id":"proof","pattern":"block.testimonials-section"},{"id":"faq","pattern":"block.faq-section"},{"id":"related","components":["provider-related-products?"]},{"id":"footer","pattern":"block.footer"}],
+  "responsive":{"rule":"Product title/price/action remain before secondary details; provider controls keep source/focus order."},
+  "accessibility":["Product provider owns stock/variation/cart state and announcements.","Gallery alternatives and control labels remain provider responsibilities.","Do not reimplement checkout, inventory, variation or cart business logic."],
+  "variants":["classic","media-led","content-led"]
+}
