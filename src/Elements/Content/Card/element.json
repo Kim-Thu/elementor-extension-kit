@@ -1,0 +1,8 @@
+{
+  "id": "card",
+  "name": "Card",
+  "class": "ElementorExtensionKit\\Elements\\Content\\Card\\CardWidget",
+  "handle": "eek-card",
+  "style": "css/card.css",
+  "script": "js/card.js"
+}

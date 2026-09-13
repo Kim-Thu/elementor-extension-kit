@@ -1,0 +1,9 @@
+.eek-card {
+    display: grid;
+    gap: var(--eek-space-3, 0.75rem);
+}
+
+.eek-card__title,
+.eek-card__description {
+    margin: 0;
+}
