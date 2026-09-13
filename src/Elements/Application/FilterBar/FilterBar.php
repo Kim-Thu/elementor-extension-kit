@@ -43,6 +43,10 @@ final class FilterBar extends Widget_Base
                     $label = trim((string) ($filter['label'] ?? ''));
                     $name = sanitize_key((string) ($filter['name'] ?? ''));
                     if ($name === '') { continue; }
+                    $current = '';
+                    if (isset($_GET[$name]) && ! is_array($_GET[$name])) {
+                        $current = sanitize_text_field(wp_unslash((string) $_GET[$name]));
+                    }
                     $id = 'eek-filter-' . $this->get_id() . '-' . (int) $index;
                     $lines = preg_split('/\R/', (string) ($filter['options'] ?? '')) ?: [];
                     ?>
@@ -55,7 +59,7 @@ final class FilterBar extends Widget_Base
                                 $text = $parts[1] ?? $value;
                                 if ($value === '' && $text === '') { continue; }
                                 ?>
-                                <option value="<?php echo esc_attr($value); ?>"><?php echo esc_html($text); ?></option>
+                                <option value="<?php echo esc_attr($value); ?>"<?php selected($current, $value); ?>><?php echo esc_html($text); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
