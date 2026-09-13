@@ -7,8 +7,9 @@ namespace ElementorExtensionKit\Elements\Content\Card;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 use ElementorExtensionKit\Core\Plugin;
-use ElementorExtensionKit\Elementor\ElementDefaultResolver;
 use ElementorExtensionKit\Elementor\ElementInstanceInheritance;
+use ElementorExtensionKit\Elementor\ElementTemplateRegistry;
+use ElementorExtensionKit\Elementor\ElementTemplateResolver;
 
 final class Card extends Widget_Base
 {
@@ -21,18 +22,21 @@ final class Card extends Widget_Base
     protected function register_controls(): void
     {
         $this->start_controls_section('content', ['label' => esc_html__('Content', 'elementor-extension-kit')]);
-        $this->add_control('layout_source', [
-            'label' => esc_html__('Layout source', 'elementor-extension-kit'),
+        $this->add_control('template_source', [
+            'label' => esc_html__('Template source', 'elementor-extension-kit'),
             'type' => Controls_Manager::SELECT,
-            'default' => 'inherit',
-            'options' => ['inherit' => esc_html__('Inherit global', 'elementor-extension-kit'), 'override' => esc_html__('Override locally', 'elementor-extension-kit')],
+            'default' => ElementInstanceInheritance::INHERIT,
+            'options' => [
+                ElementInstanceInheritance::INHERIT => esc_html__('Inherit global', 'elementor-extension-kit'),
+                ElementInstanceInheritance::OVERRIDE => esc_html__('Override locally', 'elementor-extension-kit'),
+            ],
         ]);
-        $this->add_control('layout_override', [
-            'label' => esc_html__('Layout', 'elementor-extension-kit'),
+        $this->add_control('template_override', [
+            'label' => esc_html__('Template', 'elementor-extension-kit'),
             'type' => Controls_Manager::SELECT,
             'default' => 'default',
-            'options' => ['default' => esc_html__('Default', 'elementor-extension-kit'), 'overlay' => esc_html__('Overlay', 'elementor-extension-kit')],
-            'condition' => ['layout_source' => 'override'],
+            'options' => self::templateOptions(),
+            'condition' => ['template_source' => ElementInstanceInheritance::OVERRIDE],
         ]);
         $this->add_control('title', ['label' => esc_html__('Title', 'elementor-extension-kit'), 'type' => Controls_Manager::TEXT, 'default' => esc_html__('Card title', 'elementor-extension-kit'), 'dynamic' => ['active' => true]]);
         $this->add_control('description', ['label' => esc_html__('Description', 'elementor-extension-kit'), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__('Card description.', 'elementor-extension-kit'), 'dynamic' => ['active' => true]]);
@@ -42,10 +46,23 @@ final class Card extends Widget_Base
     protected function render(): void
     {
         $settings = $this->get_settings_for_display();
-        $local = ElementInstanceInheritance::local($settings, 'layout');
-        $layout = (string) ElementDefaultResolver::resolve('card', 'layout', $local['value'], $local['has_local'], 'default');
-        if (! in_array($layout, ['default', 'overlay'], true)) { $layout = 'default'; }
-        $template = __DIR__ . '/templates/card' . ucfirst($layout) . '.php';
-        if (is_readable($template)) { require $template; }
+        $local = ElementInstanceInheritance::local($settings, 'template');
+        $template = ElementTemplateResolver::resolve('card', $local['value'], $local['has_local']);
+        $path = is_array($template) && is_string($template['path'] ?? null)
+            ? $template['path']
+            : __DIR__ . '/templates/cardDefault.php';
+
+        if (is_readable($path)) {
+            require $path;
+        }
+    }
+
+    private static function templateOptions(): array
+    {
+        $options = ['default' => esc_html__('Default / Native', 'elementor-extension-kit')];
+        foreach (ElementTemplateRegistry::forElement('card') as $id => $template) {
+            $options[$id] = (string) ($template['name'] ?? $id);
+        }
+        return $options;
     }
 }
