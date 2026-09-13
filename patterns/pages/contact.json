@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.contact","type":"page","title":"Contact",
+  "purpose":"Reusable contact page composed around a real form provider and contact-information block.",
+  "dependencies":{"native":["Container","Heading","Text Editor","Form provider","Map?"],"eek":[],"patterns":["block.hero","block.contact-section","block.faq-section","block.footer"]},
+  "regions":[{"id":"intro","pattern":"block.hero"},{"id":"contact","pattern":"block.contact-section"},{"id":"faq","pattern":"block.faq-section"},{"id":"footer","pattern":"block.footer"}],
+  "responsive":{"rule":"Contact details remain before provider form when that is the source order; map/media never steals focus order."},
+  "accessibility":["One page-level H1.","Contact links use meaningful labels and appropriate URI schemes.","Provider owns form labels/errors/submission semantics."],
+  "variants":["simple","support","location-led"]
+}
