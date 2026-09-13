@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.pricing-section","type":"block","title":"Pricing Section",
+  "purpose":"Present plans and comparison choices without owning billing or checkout logic.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["pricing-card","pricing-table"]},
+  "regions":[{"id":"intro","components":["heading","body?"]},{"id":"plans","components":["pricing-card[]|pricing-table"]},{"id":"footnote","components":["supporting-copy?"]}],
+  "responsive":{"desktop":"cards or comparison table based on content","mobile":"cards stack; table keeps accessible overflow behavior"},
+  "accessibility":["Plan names and prices retain readable text labels.","Featured styling must not be the only way to communicate recommendation.","Actions remain links/buttons according to behavior."],
+  "variants":["cards","comparison","featured-plan"]
+}
