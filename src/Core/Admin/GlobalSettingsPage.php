@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ElementorExtensionKit\Core\Admin;
 
 use ElementorExtensionKit\Core\Plugin;
+use ElementorExtensionKit\Core\Settings\ConfigurationDiagnostics;
 
 final class GlobalSettingsPage
 {
@@ -46,6 +47,7 @@ final class GlobalSettingsPage
         $current = SettingsNavigation::resolve(isset($_GET['section']) ? (string) wp_unslash($_GET['section']) : null);
         $sections = SettingsNavigation::sections();
         $section = $sections[$current];
+        $status = isset($_GET['eek_status']) ? sanitize_key((string) wp_unslash($_GET['eek_status'])) : '';
 
         echo '<div class="wrap eek-settings">';
         echo '<header class="eek-settings__header">';
@@ -56,12 +58,28 @@ final class GlobalSettingsPage
         echo '</div>';
         echo '</header>';
 
+        self::renderStatus($status);
+
         echo '<div class="eek-settings__layout">';
         SettingsNavigation::render($current, self::PAGE_SLUG);
         echo '<main class="eek-settings__content">';
         self::renderSectionHeader($section['label'], $section['description']);
         self::renderSection($current);
         echo '</main></div></div>';
+    }
+
+    private static function renderStatus(string $status): void
+    {
+        $message = match ($status) {
+            'saved' => __('Global settings saved.', 'elementor-extension-kit'),
+            'unchanged' => __('No settings changed.', 'elementor-extension-kit'),
+            'reset' => __('EEK global settings reset to inheritance.', 'elementor-extension-kit'),
+            default => '',
+        };
+
+        if ($message !== '') {
+            printf('<p class="eek-settings__status" data-state="success" role="status">%s</p>', esc_html($message));
+        }
     }
 
     private static function renderSectionHeader(string $title, string $description): void
@@ -163,10 +181,40 @@ final class GlobalSettingsPage
 
     private static function renderDiagnostics(): void
     {
-        self::renderEmpty(
-            __('No configuration problems detected in the page shell.', 'elementor-extension-kit'),
-            __('Diagnostics will show effective sources, stale references, and reset-to-inherit actions.', 'elementor-extension-kit')
+        $diagnostics = ConfigurationDiagnostics::inspect();
+
+        echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
+        SettingsControls::field(
+            __('Settings schema', 'elementor-extension-kit'),
+            __('Versioned contract used by all Phase 5 settings.', 'elementor-extension-kit'),
+            static function () use ($diagnostics): void {
+                $label = $diagnostics['schema_current']
+                    ? __('Current', 'elementor-extension-kit')
+                    : __('Needs migration', 'elementor-extension-kit');
+                SettingsControls::badge($label, $diagnostics['schema_current'] ? 'native' : 'warning');
+                EffectiveConfiguration::renderPreview([
+                    __('Element overrides', 'elementor-extension-kit') => (string) $diagnostics['element_overrides'],
+                    __('Template assignments', 'elementor-extension-kit') => (string) $diagnostics['template_assignments'],
+                    __('Site regions', 'elementor-extension-kit') => (string) $diagnostics['region_assignments'],
+                ]);
+            }
         );
+        SettingsControls::field(
+            __('Reset to inheritance', 'elementor-extension-kit'),
+            __('Remove EEK-owned global overrides and return to Elementor/native defaults. Content is not deleted.', 'elementor-extension-kit'),
+            static function () use ($diagnostics): void {
+                if (! $diagnostics['has_custom_settings']) {
+                    SettingsControls::badge(__('Already inheriting', 'elementor-extension-kit'), 'native');
+                    return;
+                }
+                echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
+                echo '<input type="hidden" name="action" value="eek_reset_global_settings">';
+                wp_nonce_field('eek_reset_global_settings');
+                submit_button(__('Reset EEK globals', 'elementor-extension-kit'), 'secondary', 'submit', false);
+                echo '</form>';
+            }
+        );
+        echo '</div></section>';
     }
 
     private static function renderEmpty(string $title, string $description): void
