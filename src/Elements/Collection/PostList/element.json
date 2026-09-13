@@ -1,0 +1,7 @@
+{
+  "id": "post-list",
+  "name": "Post List",
+  "class": "ElementorExtensionKit\\Elements\\Collection\\PostList\\PostList",
+  "handle": "eek-post-list",
+  "style": "css/post-list.css"
+}
