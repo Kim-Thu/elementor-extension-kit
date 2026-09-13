@@ -1,0 +1,7 @@
+{
+  "id": "loading-state",
+  "name": "Loading State",
+  "class": "ElementorExtensionKit\\Elements\\Application\\LoadingState\\LoadingState",
+  "handle": "eek-loading-state",
+  "style": "css/loading-state.css"
+}
