@@ -102,6 +102,18 @@ Element không cần CSS/JS:
 
 Cả hai đều hợp lệ. Class chỉ khai báo `get_style_depends()` / `get_script_depends()` cho asset thực sự có.
 
+## Design-system contract
+
+`docs/DESIGN_SYSTEM.md` là contract cho visual ownership.
+
+- Elementor Site Settings/Kit owns Global Colors, Global Fonts và native site design settings khi applicable.
+- EEK không tạo Global Colors/Fonts source of truth riêng.
+- Nếu element thực sự có color/typography style control, control đó phải dùng native Elementor global-style contract khi semantics phù hợp.
+- Nếu element không cần style control, không tạo control giả chỉ để expose global settings; CSS của element inherit qua `eek-design-system`.
+- Reusable spacing/radius/shadow/border/surface/state/component metrics dùng `--eek-*` semantic-gap tokens.
+- Functional/local geometry có thể giữ local nếu chưa có reusable semantics thực tế.
+- Explicit local Elementor override có precedence cao hơn global/default values.
+
 ## Shared rule
 
 Không đưa helper/attribute/component vào `Shared/` trước khi có ít nhất 2 consumer thực tế với cùng semantics và reuse làm code đơn giản hơn. Shared không được làm element kéo theo dependency/runtime cost không cần thiết.
@@ -115,4 +127,6 @@ Không đưa helper/attribute/component vào `Shared/` trước khi có ít nh�
 - [ ] Không có absolute path, `../` hoặc path traversal.
 - [ ] Template optional và layout được map bằng allow-list.
 - [ ] Element không có JS/CSS/template vẫn hợp lệ khi field/folder tương ứng được omit.
+- [ ] Elementor-owned color/typography dùng Elementor globals khi applicable; không duplicate global settings.
+- [ ] Reusable design gaps dùng semantic `--eek-*` tokens thay vì lặp hard-coded constants.
 - [ ] Không tạo abstraction/Shared chỉ vì dự đoán reuse tương lai.
