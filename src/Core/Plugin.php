@@ -20,7 +20,6 @@ final class Plugin
     public static function boot(string $pluginFile): void
     {
         self::$pluginFile = $pluginFile;
-
         add_action('plugins_loaded', [self::class, 'init']);
     }
 
@@ -33,6 +32,7 @@ final class Plugin
         add_action('admin_menu', [GlobalSettingsPage::class, 'registerMenu']);
         add_action('admin_enqueue_scripts', [GlobalSettingsPage::class, 'enqueueAssets']);
         add_action('admin_post_eek_save_global_settings', [SettingsController::class, 'save']);
+        add_action('admin_post_eek_reset_template', [SettingsController::class, 'resetTemplate']);
         add_action('admin_post_eek_reset_global_settings', [SettingsController::class, 'resetAll']);
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
@@ -43,26 +43,16 @@ final class Plugin
 
     public static function registerElementCategories(Elements_Manager $elementsManager): void
     {
-        $elementsManager->add_category(
-            self::ELEMENT_CATEGORY,
-            [
-                'title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'),
-                'icon' => 'eicon-apps',
-            ]
-        );
+        $elementsManager->add_category(self::ELEMENT_CATEGORY, [
+            'title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'),
+            'icon' => 'eicon-apps',
+        ]);
     }
 
     public static function enqueueDesignSystemStyles(): void
     {
         $handle = 'eek-design-system';
-
-        wp_enqueue_style(
-            $handle,
-            self::pluginUrl('assets/frontend/design-system.css'),
-            [],
-            self::VERSION
-        );
-
+        wp_enqueue_style($handle, self::pluginUrl('assets/frontend/design-system.css'), [], self::VERSION);
         $globalCss = GlobalStyleEmitter::css();
         if ($globalCss !== '') {
             wp_add_inline_style($handle, $globalCss);
@@ -72,27 +62,13 @@ final class Plugin
     public static function enqueueEditorStyles(): void
     {
         $handle = 'eek-elementor-editor';
-
-        wp_enqueue_style(
-            $handle,
-            self::pluginUrl('assets/editor/elementor-editor.css'),
-            [],
-            self::VERSION
-        );
-
+        wp_enqueue_style($handle, self::pluginUrl('assets/editor/elementor-editor.css'), [], self::VERSION);
         $brandMarkPath = dirname(self::$pluginFile) . '/assets/editor/brand-mark.svg';
-
         if (! is_readable($brandMarkPath)) {
             return;
         }
-
         $brandMarkUrl = self::pluginUrl('assets/editor/brand-mark.svg');
-        $inlineStyle = sprintf(
-            ':root{--eek-editor-brand-mark-image:url("%s");}',
-            esc_url_raw($brandMarkUrl)
-        );
-
-        wp_add_inline_style($handle, $inlineStyle);
+        wp_add_inline_style($handle, sprintf(':root{--eek-editor-brand-mark-image:url("%s");}', esc_url_raw($brandMarkUrl)));
     }
 
     public static function pluginUrl(string $path = ''): string
