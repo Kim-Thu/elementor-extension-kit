@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.faq-section","type":"block","title":"FAQ Section",
+  "purpose":"Present frequently asked questions using the existing accessible Accordion engine.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["accordion"]},
+  "regions":[{"id":"intro","components":["heading","body?"]},{"id":"questions","components":["accordion"]},{"id":"support","components":["supporting-copy?","action?"]}],
+  "responsive":{"desktop":"intro may sit beside accordion","mobile":"intro precedes questions in DOM order"},
+  "accessibility":["Preserve Accordion keyboard/focus/ARIA behavior.","Do not nest interactive controls inside accordion triggers."],
+  "variants":["stacked","split","support-footer"]
+}
