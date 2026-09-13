@@ -1,0 +1,7 @@
+{
+  "id": "active-filters",
+  "name": "Active Filters",
+  "class": "ElementorExtensionKit\\Elements\\Application\\ActiveFilters\\ActiveFilters",
+  "handle": "eek-active-filters",
+  "style": "css/active-filters.css"
+}
