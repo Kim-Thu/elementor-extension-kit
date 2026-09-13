@@ -17,7 +17,7 @@ final class SettingsController
             ? wp_unslash($_POST['eek'])
             : [];
 
-        $updated = SettingsStore::update(is_array($raw) ? $raw : []);
+        $updated = SettingsStore::updatePartial(is_array($raw) ? $raw : []);
         $section = isset($_POST['eek_section']) ? sanitize_key((string) wp_unslash($_POST['eek_section'])) : 'overview';
 
         self::redirect(SettingsNavigation::resolve($section), $updated ? 'saved' : 'unchanged');

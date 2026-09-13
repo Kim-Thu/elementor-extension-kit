@@ -6,7 +6,6 @@ namespace ElementorExtensionKit\Core\Admin;
 
 use ElementorExtensionKit\Core\Plugin;
 use ElementorExtensionKit\Core\Settings\ConfigurationDiagnostics;
-use ElementorExtensionKit\Elementor\ElementorGlobalSource;
 
 final class GlobalSettingsPage
 {
@@ -95,7 +94,7 @@ final class GlobalSettingsPage
     private static function renderSection(string $section): void
     {
         match ($section) {
-            'design-system' => self::renderDesignSystem(),
+            'design-system' => DesignSystemPanel::render(),
             'elements' => self::renderElements(),
             'templates' => self::renderTemplates(),
             'regions' => self::renderRegions(),
@@ -126,33 +125,6 @@ final class GlobalSettingsPage
             __('Global first. Local override only when a single instance must differ.', 'elementor-extension-kit'),
             static function (): void {
                 echo '<strong>' . esc_html__('Global → Element default → Template/Layout → Local override', 'elementor-extension-kit') . '</strong>';
-            }
-        );
-        echo '</div></section>';
-    }
-
-    private static function renderDesignSystem(): void
-    {
-        $ownership = ElementorGlobalSource::ownership();
-
-        echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
-        SettingsControls::field(
-            __('Global Colors & Typography', 'elementor-extension-kit'),
-            __('Use the active Elementor Kit as the source of truth. EEK never creates a second color or font store.', 'elementor-extension-kit'),
-            static function () use ($ownership): void {
-                printf(
-                    '<a class="button button-secondary" href="%s">%s</a>',
-                    esc_url(ElementorGlobalSource::siteSettingsUrl()),
-                    esc_html__('Open Elementor Site Settings', 'elementor-extension-kit')
-                );
-                EffectiveConfiguration::renderState('elementor', implode(' · ', array_values($ownership)));
-            }
-        );
-        SettingsControls::field(
-            __('EEK semantic controls', 'elementor-extension-kit'),
-            __('Spacing, radius, border, shadow, surfaces, and motion live here so one change cascades through inheriting EEK elements.', 'elementor-extension-kit'),
-            static function (): void {
-                SettingsControls::badge(__('Configured in this section', 'elementor-extension-kit'));
             }
         );
         echo '</div></section>';
