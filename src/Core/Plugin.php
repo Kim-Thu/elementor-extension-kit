@@ -29,6 +29,7 @@ final class Plugin
 
         add_action('elementor/elements/categories_registered', [self::class, 'registerElementCategories']);
         add_action('elementor/widgets/register', [ElementRegistry::class, 'registerWidgets']);
+        add_action('wp_enqueue_scripts', [self::class, 'enqueueDesignSystemStyles']);
         add_action('wp_enqueue_scripts', [ElementRegistry::class, 'registerAssets']);
         add_action('elementor/editor/after_enqueue_styles', [self::class, 'enqueueEditorStyles']);
     }
@@ -41,6 +42,16 @@ final class Plugin
                 'title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'),
                 'icon' => 'eicon-apps',
             ]
+        );
+    }
+
+    public static function enqueueDesignSystemStyles(): void
+    {
+        wp_enqueue_style(
+            'eek-design-system',
+            self::pluginUrl('assets/frontend/design-system.css'),
+            [],
+            self::VERSION
         );
     }
 

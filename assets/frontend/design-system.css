@@ -1,0 +1,25 @@
+:root {
+    --eek-color-primary: var(--e-global-color-primary, currentColor);
+    --eek-color-secondary: var(--e-global-color-secondary, currentColor);
+    --eek-color-text: var(--e-global-color-text, inherit);
+    --eek-color-accent: var(--e-global-color-accent, currentColor);
+
+    --eek-font-primary: var(--e-global-typography-primary-font-family, inherit);
+    --eek-font-secondary: var(--e-global-typography-secondary-font-family, inherit);
+    --eek-font-text: var(--e-global-typography-text-font-family, inherit);
+    --eek-font-accent: var(--e-global-typography-accent-font-family, inherit);
+}
+
+:where([class^="eek-"], [class*=" eek-"]) {
+    color: var(--eek-color-text, inherit);
+    font-family: var(--eek-font-text, inherit);
+}
+
+:where(h1, h2, h3, h4, h5, h6)[class^="eek-"],
+:where(h1, h2, h3, h4, h5, h6)[class*=" eek-"] {
+    font-family: var(--eek-font-primary, inherit);
+}
+
+:where([class^="eek-"], [class*=" eek-"]) a {
+    color: var(--eek-color-accent, currentColor);
+}
