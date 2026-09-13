@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ElementorExtensionKit\Core\Settings;
 
 use ElementorExtensionKit\Elementor\ElementTemplateRegistry;
+use ElementorExtensionKit\Elementor\ElementorRegionTemplateRepository;
 
 final class ConfigurationDiagnostics
 {
@@ -18,11 +19,18 @@ final class ConfigurationDiagnostics
 
         $invalidTemplates = [];
         foreach ($templates as $elementId => $templateId) {
-            if (! is_string($elementId) || ! is_string($templateId)) {
-                continue;
-            }
-            if (ElementTemplateRegistry::get($elementId, $templateId) === null) {
+            if (is_string($elementId) && is_string($templateId) && ElementTemplateRegistry::get($elementId, $templateId) === null) {
                 $invalidTemplates[$elementId] = $templateId;
+            }
+        }
+
+        $invalidRegions = [];
+        foreach (['header', 'footer'] as $region) {
+            $raw = $regions[$region] ?? null;
+            if ($raw === null || $raw === '') { continue; }
+            $postId = is_numeric($raw) ? (int) $raw : 0;
+            if (! ElementorRegionTemplateRepository::isValid($region, $postId)) {
+                $invalidRegions[$region] = $raw;
             }
         }
 
@@ -34,6 +42,8 @@ final class ConfigurationDiagnostics
             'invalid_templates' => $invalidTemplates,
             'invalid_template_count' => count($invalidTemplates),
             'region_assignments' => count(array_filter($regions, static fn (mixed $value): bool => is_string($value) && $value !== '')),
+            'invalid_regions' => $invalidRegions,
+            'invalid_region_count' => count($invalidRegions),
             'has_custom_settings' => self::hasCustomSettings($settings),
         ];
     }
