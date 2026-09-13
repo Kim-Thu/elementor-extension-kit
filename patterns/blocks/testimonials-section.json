@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"block.testimonials-section","type":"block","title":"Testimonials Section",
+  "purpose":"Present social proof while preserving quote attribution semantics.",
+  "dependencies":{"native":["Container","Heading","Text Editor"],"eek":["testimonial","testimonial-grid"]},
+  "regions":[{"id":"intro","components":["heading?","body?"]},{"id":"testimonials","components":["testimonial-grid|testimonial[]"]}],
+  "responsive":{"desktop":"grid or single featured quote","mobile":"single-column source order; no carousel required"},
+  "accessibility":["Keep quote text associated with author attribution.","Do not introduce auto-rotating carousel behavior for baseline pattern."],
+  "variants":["grid","featured","compact"]
+}
