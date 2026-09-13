@@ -3,5 +3,9 @@
   "name": "Testimonial",
   "class": "ElementorExtensionKit\\Elements\\Content\\Testimonial\\Testimonial",
   "handle": "eek-testimonial",
-  "style": "css/testimonial.css"
+  "style": "css/testimonial.css",
+  "templates": [
+    {"id": "default", "name": "Default", "file": "templates/testimonialDefault.php", "modes": ["default"]},
+    {"id": "compact", "name": "Compact", "file": "templates/testimonialCompact.php", "modes": ["compact"]}
+  ]
 }
