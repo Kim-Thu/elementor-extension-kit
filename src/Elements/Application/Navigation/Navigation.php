@@ -46,7 +46,17 @@ final class Navigation extends Widget_Base
         $repeater->add_control('url', ['label' => esc_html__('URL', 'elementor-extension-kit'), 'type' => Controls_Manager::URL, 'placeholder' => 'https://example.com']);
         $repeater->add_control('current', ['label' => esc_html__('Current item', 'elementor-extension-kit'), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '']);
         $repeater->add_control('section', ['label' => esc_html__('Section label', 'elementor-extension-kit'), 'description' => esc_html__('Optional text shown before this item.', 'elementor-extension-kit'), 'type' => Controls_Manager::TEXT]);
-        $this->add_control('items', ['label' => esc_html__('Items', 'elementor-extension-kit'), 'type' => Controls_Manager::REPEATER, 'fields' => $repeater->get_controls(), 'default' => [], 'title_field' => '{{{ label }}}']);
+        $this->add_control('items', [
+            'label' => esc_html__('Items', 'elementor-extension-kit'),
+            'type' => Controls_Manager::REPEATER,
+            'fields' => $repeater->get_controls(),
+            'default' => [
+                ['label' => esc_html__('Overview', 'elementor-extension-kit'), 'url' => ['url' => '#'], 'current' => 'yes', 'section' => ''],
+                ['label' => esc_html__('Activity', 'elementor-extension-kit'), 'url' => ['url' => '#'], 'current' => '', 'section' => ''],
+                ['label' => esc_html__('Settings', 'elementor-extension-kit'), 'url' => ['url' => '#'], 'current' => '', 'section' => ''],
+            ],
+            'title_field' => '{{{ label }}}',
+        ]);
         $this->end_controls_section();
     }
 
