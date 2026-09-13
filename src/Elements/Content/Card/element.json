@@ -3,5 +3,16 @@
   "name": "Card",
   "class": "ElementorExtensionKit\\Elements\\Content\\Card\\Card",
   "handle": "eek-card",
-  "style": "css/card.css"
+  "style": "css/card.css",
+  "global_defaults": {
+    "layout": {
+      "label": "Layout",
+      "type": "select",
+      "default": "default",
+      "options": {
+        "default": "Default",
+        "overlay": "Overlay"
+      }
+    }
+  }
 }
