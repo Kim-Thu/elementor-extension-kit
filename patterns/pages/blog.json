@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"page.blog","type":"page","title":"Blog",
+  "purpose":"Reusable WordPress blog/archive presentation composed from existing query and filtering elements.",
+  "dependencies":{"native":["Container","Heading","WordPress query context"],"eek":["search","filter-bar","active-filters","taxonomy-list","post-grid","post-list","pagination"],"patterns":["block.footer"]},
+  "regions":[{"id":"header","components":["h1","description?"]},{"id":"discovery","components":["search","filter-bar?","active-filters?","taxonomy-list?"]},{"id":"results","components":["post-grid|post-list"]},{"id":"pagination","components":["pagination-or-collection-pagination"]},{"id":"footer","pattern":"block.footer"}],
+  "responsive":{"rule":"Search/filter controls precede results and pagination in DOM order; controls may wrap without reordering."},
+  "accessibility":["One page-level H1.","Filter labels remain programmatic and active filters are removable by keyboard.","Results precede pagination; WordPress query/business logic remains authoritative."],
+  "variants":["grid","editorial-list","filter-led"]
+}
