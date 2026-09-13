@@ -1,0 +1,9 @@
+{
+  "schema":"eek.pattern/v1","id":"application.dashboard-layout","type":"application","title":"Dashboard Layout",
+  "purpose":"Reusable dashboard content composition using native layout and existing application/data elements.",
+  "dependencies":{"native":["Container","Grid"],"eek":["page-header","stat","filter-bar","active-filters","search","data-table","activity-feed","empty-state","loading-state"],"patterns":["application.app-shell"]},
+  "regions":[{"id":"header","components":["page-header"]},{"id":"metrics","components":["stat[]"]},{"id":"controls","components":["search?","filter-bar?","active-filters?"]},{"id":"primary-data","components":["data-table|content-collection","loading-state?","empty-state?"]},{"id":"activity","components":["activity-feed?"]}],
+  "responsive":{"desktop":"metrics/data/activity may use native Grid columns","mobile":"header then metrics then controls then primary data then activity; no CSS focus-order changes"},
+  "accessibility":["Controls precede the data they affect.","Loading/empty state replaces the affected region with meaningful status/content.","Table overflow and labels preserve existing Data Table contract."],
+  "variants":["analytics","operations","compact"]
+}
