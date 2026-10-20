@@ -13,8 +13,8 @@ use WP_Query;
 final class Pagination extends Widget_Base
 {
     public function get_name(): string { return 'eek-pagination'; }
-    public function get_title(): string { return esc_html__('EEK Pagination', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Pagination', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-ellipsis-h eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-pagination']; }
 

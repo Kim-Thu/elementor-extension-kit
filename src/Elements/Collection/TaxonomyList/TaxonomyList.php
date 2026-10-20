@@ -13,8 +13,8 @@ use WP_Taxonomy;
 final class TaxonomyList extends Widget_Base
 {
     public function get_name(): string { return 'eek-taxonomy-list'; }
-    public function get_title(): string { return esc_html__('EEK Taxonomy List', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Taxonomy List', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-sitemap eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-taxonomy-list']; }
 
