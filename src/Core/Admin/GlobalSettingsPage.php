@@ -14,13 +14,21 @@ final class GlobalSettingsPage
     public static function registerMenu(): void
     {
         add_menu_page(__('Elementor Extension Kit', 'elementor-extension-kit'), __('EEK Settings', 'elementor-extension-kit'), 'manage_options', self::PAGE_SLUG, [self::class, 'render'], 'dashicons-admin-customizer', 58);
+        add_action('wp_ajax_eek_settings_section', [self::class, 'ajaxSection']);
     }
 
     public static function enqueueAssets(string $hook): void
     {
         if ($hook !== 'toplevel_page_' . self::PAGE_SLUG) { return; }
-        wp_enqueue_style('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.css'), [], Plugin::VERSION);
-        wp_enqueue_script('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.js'), [], Plugin::VERSION, true);
+        $assetRoot = dirname(__DIR__, 3) . '/assets/admin/';
+        $cssVersion = is_file($assetRoot . 'global-settings.css') ? (string) filemtime($assetRoot . 'global-settings.css') : Plugin::VERSION;
+        $jsVersion = is_file($assetRoot . 'global-settings.js') ? (string) filemtime($assetRoot . 'global-settings.js') : Plugin::VERSION;
+        wp_enqueue_style('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.css'), [], $cssVersion);
+        wp_enqueue_script('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.js'), [], $jsVersion, true);
+        wp_add_inline_script('eek-global-settings', 'window.eekSettingsNavigation = ' . wp_json_encode([
+            'endpoint' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('eek_settings_section'),
+        ]) . ';', 'before');
     }
 
     public static function render(): void
@@ -44,6 +52,33 @@ final class GlobalSettingsPage
         self::renderSectionHeader($section['label'], $section['description']);
         self::renderSection($current);
         echo '</main></div></div>';
+    }
+
+    /**
+     * Render only the selected section for same-page navigation.
+     * Full admin page links remain the progressive-enhancement fallback.
+     */
+    public static function ajaxSection(): void
+    {
+        if (! current_user_can('manage_options')) {
+            wp_send_json_error(['message' => __('Access denied.', 'elementor-extension-kit')], 403);
+        }
+        check_ajax_referer('eek_settings_section', 'nonce');
+
+        $requested = isset($_POST['section']) && is_string($_POST['section'])
+            ? sanitize_key(wp_unslash($_POST['section']))
+            : '';
+        $sections = SettingsNavigation::sections();
+        if (! isset($sections[$requested])) {
+            wp_send_json_error(['message' => __('Invalid settings section.', 'elementor-extension-kit')], 400);
+        }
+
+        ob_start();
+        self::renderSectionHeader($sections[$requested]['label'], $sections[$requested]['description']);
+        self::renderSection($requested);
+        $html = ob_get_clean();
+
+        wp_send_json_success(['html' => $html]);
     }
 
     private static function renderStatus(string $status): void
