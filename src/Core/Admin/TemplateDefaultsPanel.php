@@ -29,7 +29,7 @@ final class TemplateDefaultsPanel
         echo '</div></div>';
         echo '<div class="eek-settings__section-body">';
         echo '<label class="screen-reader-text" for="eek-template-search">' . esc_html__('Search elements', 'elementor-extension-kit') . '</label>';
-        echo '<input id="eek-template-search" class="regular-text eek-template-search" type="search" placeholder="' . esc_attr__('Search elements…', 'elementor-extension-kit') . '" data-eek-template-search>';
+        echo '<input id="eek-template-search" class="eek-template-search" type="search" placeholder="' . esc_attr__('Search elements…', 'elementor-extension-kit') . '" data-eek-template-search>';
         echo '</div></section>';
 
         echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
