@@ -1,15 +1,19 @@
-/* EEK widget identity: functional icon centered, brand atom in top-right. */
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element {
+/* All EEK widgets share one editor card identity, independent of their icon. */
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element,
+.elementor-panel .elementor-element-wrapper:has([class*="eek-"]) .elementor-element {
   position: relative;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 98px;
-  padding: 16px 8px 10px;
+  height: 108px;
+  min-height: 108px;
+  padding: 18px 8px 10px;
 }
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .icon {
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .icon,
+.elementor-panel .elementor-element-wrapper:has([class*="eek-"]) .icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,13 +26,15 @@
   font-size: 27px;
   line-height: 1;
 }
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .title-wrapper {
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .title-wrapper,
+.elementor-panel .elementor-element-wrapper:has([class*="eek-"]) .title-wrapper {
   flex: 0 0 auto;
   width: 100%;
   margin: 0;
   text-align: center;
 }
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element::after {
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element::after,
+.elementor-panel .elementor-element-wrapper:has([class*="eek-"]) .elementor-element::after {
   content: "";
   position: absolute;
   top: 6px;
