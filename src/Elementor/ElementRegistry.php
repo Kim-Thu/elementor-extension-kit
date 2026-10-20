@@ -24,7 +24,10 @@ final class ElementRegistry
                 continue;
             }
 
-            $widgetsManager->register(new $class());
+            $widget = new $class();
+            // Identify EEK widgets centrally without changing their functional icons.
+            $widget->add_render_attribute('_wrapper', 'class', 'eek-widget');
+            $widgetsManager->register($widget);
         }
     }
 
