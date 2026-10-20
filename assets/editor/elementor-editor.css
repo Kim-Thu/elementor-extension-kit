@@ -1,11 +1,7 @@
-/* EEK editor palette identity comes from registered widget names, not icon classes.
- * Elementor widget names are eek-*, including widgets with native eicon-* icons.
+/* Elementor Editor palette: real DOM uses data-library-element-type="eek-*".
+ * Keep styling scoped to EEK cards, independent of each widget's icon classes.
  */
-.elementor-panel .elementor-element-wrapper:has([data-widget_type^="eek-"]) .elementor-element,
-.elementor-panel .elementor-element-wrapper:has([data-element_type^="eek-"]) .elementor-element,
-.elementor-panel .elementor-element-wrapper[data-widget_type^="eek-"] .elementor-element,
-.elementor-panel .elementor-element-wrapper[data-element_type^="eek-"] .elementor-element,
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element {
+.elementor-panel .elementor-element-wrapper > .elementor-element[data-library-element-type^="eek-"] {
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -17,11 +13,7 @@
   min-height: 108px;
   padding: 18px 8px 10px;
 }
-.elementor-panel .elementor-element-wrapper:has([data-widget_type^="eek-"]) .icon,
-.elementor-panel .elementor-element-wrapper:has([data-element_type^="eek-"]) .icon,
-.elementor-panel .elementor-element-wrapper[data-widget_type^="eek-"] .icon,
-.elementor-panel .elementor-element-wrapper[data-element_type^="eek-"] .icon,
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .icon {
+.elementor-panel .elementor-element-wrapper > .elementor-element[data-library-element-type^="eek-"] > .icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,22 +22,17 @@
   margin: 0;
   flex: 0 0 32px;
 }
-.elementor-panel .elementor-element-wrapper .eek-widget-icon { font-size: 27px; line-height: 1; }
-.elementor-panel .elementor-element-wrapper:has([data-widget_type^="eek-"]) .title-wrapper,
-.elementor-panel .elementor-element-wrapper:has([data-element_type^="eek-"]) .title-wrapper,
-.elementor-panel .elementor-element-wrapper[data-widget_type^="eek-"] .title-wrapper,
-.elementor-panel .elementor-element-wrapper[data-element_type^="eek-"] .title-wrapper,
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .title-wrapper {
+.elementor-panel .elementor-element-wrapper > .elementor-element[data-library-element-type^="eek-"] .eek-widget-icon {
+  font-size: 27px;
+  line-height: 1;
+}
+.elementor-panel .elementor-element-wrapper > .elementor-element[data-library-element-type^="eek-"] > .title-wrapper {
   flex: 0 0 auto;
   width: 100%;
   margin: 0;
   text-align: center;
 }
-.elementor-panel .elementor-element-wrapper:has([data-widget_type^="eek-"]) .elementor-element::after,
-.elementor-panel .elementor-element-wrapper:has([data-element_type^="eek-"]) .elementor-element::after,
-.elementor-panel .elementor-element-wrapper[data-widget_type^="eek-"] .elementor-element::after,
-.elementor-panel .elementor-element-wrapper[data-element_type^="eek-"] .elementor-element::after,
-.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element::after {
+.elementor-panel .elementor-element-wrapper > .elementor-element[data-library-element-type^="eek-"]::after {
   content: "";
   position: absolute;
   top: 6px;
