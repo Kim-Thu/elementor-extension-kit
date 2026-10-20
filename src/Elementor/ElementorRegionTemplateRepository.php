@@ -19,8 +19,12 @@ final class ElementorRegionTemplateRepository
             'posts_per_page' => 200,
             'orderby' => 'title',
             'order' => 'ASC',
-            'meta_key' => '_elementor_template_type',
-            'meta_value' => $region,
+            // Elementor Free saved sections/containers can be used as presentation templates too.
+            'meta_query' => [[
+                'key' => '_elementor_template_type',
+                'value' => [$region, 'section', 'container'],
+                'compare' => 'IN',
+            ]],
             'no_found_rows' => true,
         ]);
 
@@ -43,6 +47,6 @@ final class ElementorRegionTemplateRepository
         return $post instanceof \WP_Post
             && $post->post_type === 'elementor_library'
             && $post->post_status === 'publish'
-            && get_post_meta($postId, '_elementor_template_type', true) === $region;
+            && in_array(get_post_meta($postId, '_elementor_template_type', true), [$region, 'section', 'container'], true);
     }
 }
