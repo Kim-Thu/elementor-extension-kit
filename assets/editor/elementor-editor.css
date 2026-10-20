@@ -1,39 +1,42 @@
-/* Elementor editor-only branding for EEK elements. */
-
-.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .elementor-element {
-    align-items:center;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    min-height:48px;
-    padding:10px 12px;
+/* EEK widget identity: functional icon centered, brand atom in top-right. */
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 98px;
+  padding: 16px 8px 10px;
 }
-
-.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .icon {
-    align-items:center;
-    display:flex;
-    flex:0 0 24px;
-    height:24px;
-    justify-content:center;
-    margin:0;
-    width:24px;
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  flex: 0 0 32px;
 }
-
-.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .eek-brand-mark {
-    background-image:var(--eek-editor-brand-mark-image, none);
-    background-position:center;
-    background-repeat:no-repeat;
-    background-size:contain;
-    display:block;
-    height:24px;
-    width:24px;
+.elementor-panel .elementor-element-wrapper .eek-widget-icon {
+  font-size: 27px;
+  line-height: 1;
 }
-
-.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .eek-brand-mark::before {
-    content:none !important;
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .title-wrapper {
+  flex: 0 0 auto;
+  width: 100%;
+  margin: 0;
+  text-align: center;
 }
-
-.elementor-panel .elementor-element-wrapper:has(.eek-brand-mark) .title-wrapper {
-    flex:1 1 auto;
-    margin:0;
+.elementor-panel .elementor-element-wrapper:has(.eek-widget-icon) .elementor-element::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: var(--eek-editor-brand-mark-image, none) center / contain no-repeat;
+  mask: var(--eek-editor-brand-mark-image, none) center / contain no-repeat;
+  pointer-events: none;
 }
