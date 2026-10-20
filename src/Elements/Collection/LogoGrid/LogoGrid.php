@@ -12,8 +12,8 @@ use ElementorExtensionKit\Core\Plugin;
 final class LogoGrid extends Widget_Base
 {
     public function get_name(): string { return 'eek-logo-grid'; }
-    public function get_title(): string { return esc_html__('EEK Logo Grid', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Logo Grid', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-gallery-grid eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-logo-grid']; }
 
