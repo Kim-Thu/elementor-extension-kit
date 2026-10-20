@@ -20,8 +20,11 @@ final class GlobalSettingsPage
     public static function enqueueAssets(string $hook): void
     {
         if ($hook !== 'toplevel_page_' . self::PAGE_SLUG) { return; }
-        wp_enqueue_style('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.css'), [], Plugin::VERSION);
-        wp_enqueue_script('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.js'), [], Plugin::VERSION, true);
+        $assetRoot = dirname(__DIR__, 3) . '/assets/admin/';
+        $cssVersion = is_file($assetRoot . 'global-settings.css') ? (string) filemtime($assetRoot . 'global-settings.css') : Plugin::VERSION;
+        $jsVersion = is_file($assetRoot . 'global-settings.js') ? (string) filemtime($assetRoot . 'global-settings.js') : Plugin::VERSION;
+        wp_enqueue_style('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.css'), [], $cssVersion);
+        wp_enqueue_script('eek-global-settings', Plugin::pluginUrl('assets/admin/global-settings.js'), [], $jsVersion, true);
         wp_add_inline_script('eek-global-settings', 'window.eekSettingsNavigation = ' . wp_json_encode([
             'endpoint' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('eek_settings_section'),
