@@ -12,8 +12,8 @@ use ElementorExtensionKit\Core\Plugin;
 final class Step extends Widget_Base
 {
     public function get_name(): string { return 'eek-step'; }
-    public function get_title(): string { return esc_html__('EEK Step / Timeline Item', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Step / Timeline Item', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-number-field eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-step']; }
 
