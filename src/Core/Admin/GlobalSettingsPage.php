@@ -79,13 +79,41 @@ final class GlobalSettingsPage
 
     private static function renderOverview(): void
     {
-        echo '<section class="eek-settings__section"><div class="eek-settings__section-body">';
-        SettingsControls::field(__('Design source', 'elementor-extension-kit'), __('Colors and typography stay owned by Elementor; EEK adds only missing semantic controls.', 'elementor-extension-kit'), static function (): void {
-            SettingsControls::badge(__('Elementor native globals', 'elementor-extension-kit'), 'native'); echo ' '; SettingsControls::badge(__('EEK semantic gaps', 'elementor-extension-kit'));
-            EffectiveConfiguration::renderPreview([__('Colors & type', 'elementor-extension-kit') => __('Elementor', 'elementor-extension-kit'), __('Spacing & shape', 'elementor-extension-kit') => __('EEK Global', 'elementor-extension-kit'), __('Element presentation', 'elementor-extension-kit') => __('Inherited', 'elementor-extension-kit')]);
-        });
-        SettingsControls::field(__('Workflow', 'elementor-extension-kit'), __('Global first. Local override only when a single instance must differ.', 'elementor-extension-kit'), static function (): void { echo '<strong>' . esc_html__('Global → Element default → Template/Layout → Local override', 'elementor-extension-kit') . '</strong>'; });
+        $diagnostics = ConfigurationDiagnostics::inspect();
+        $sections = SettingsNavigation::sections();
+        $routes = [
+            'design-system' => __('Configure site-wide spacing, shape, surfaces and motion.', 'elementor-extension-kit'),
+            'elements' => __('Set element defaults while preserving instance overrides.', 'elementor-extension-kit'),
+            'templates' => __('Choose layout defaults with native fallback.', 'elementor-extension-kit'),
+            'regions' => __('Manage compatible header and footer assignments.', 'elementor-extension-kit'),
+        ];
+
+        echo '<section class="eek-overview-intro" aria-labelledby="eek-overview-heading">';
+        echo '<div><p class="eek-overview-intro__kicker">' . esc_html__('Configuration workspace', 'elementor-extension-kit') . '</p>';
+        echo '<h3 id="eek-overview-heading">' . esc_html__('Make a change once. Keep control everywhere.', 'elementor-extension-kit') . '</h3>';
+        echo '<p>' . esc_html__('Elementor owns global colors and typography. EEK controls complementary design tokens, element defaults and presentation. Individual widgets can still override inherited values.', 'elementor-extension-kit') . '</p></div>';
+        echo '<a class="eek-overview-intro__action" href="' . esc_url(add_query_arg(['page' => self::PAGE_SLUG, 'section' => 'design-system'], admin_url('admin.php'))) . '">' . esc_html__('Open Design System', 'elementor-extension-kit') . ' &rarr;</a>';
+        echo '</section>';
+
+        echo '<section class="eek-overview-group" aria-labelledby="eek-overview-workspaces"><div class="eek-overview-group__heading"><h3 id="eek-overview-workspaces">' . esc_html__('Configuration areas', 'elementor-extension-kit') . '</h3><p>' . esc_html__('Choose what you need to change.', 'elementor-extension-kit') . '</p></div>';
+        echo '<div class="eek-overview-links">';
+        foreach ($routes as $id => $description) {
+            $url = add_query_arg(['page' => self::PAGE_SLUG, 'section' => $id], admin_url('admin.php'));
+            echo '<a class="eek-overview-link" href="' . esc_url($url) . '"><span><strong>' . esc_html($sections[$id]['label']) . '</strong><small>' . esc_html($description) . '</small></span><span class="eek-overview-link__arrow" aria-hidden="true">&rarr;</span></a>';
+        }
         echo '</div></section>';
+
+        echo '<section class="eek-overview-group" aria-labelledby="eek-overview-health"><div class="eek-overview-group__heading"><h3 id="eek-overview-health">' . esc_html__('Configuration health', 'elementor-extension-kit') . '</h3><p>' . esc_html__('Live summary of saved EEK settings.', 'elementor-extension-kit') . '</p></div>';
+        echo '<dl class="eek-overview-stats">';
+        $stats = [
+            __('Element overrides', 'elementor-extension-kit') => (int) ($diagnostics['element_overrides'] ?? 0),
+            __('Template assignments', 'elementor-extension-kit') => (int) ($diagnostics['template_assignments'] ?? 0),
+            __('Site regions', 'elementor-extension-kit') => (int) ($diagnostics['region_assignments'] ?? 0),
+        ];
+        foreach ($stats as $label => $value) {
+            echo '<div><dt>' . esc_html($label) . '</dt><dd>' . esc_html((string) $value) . '</dd></div>';
+        }
+        echo '</dl><a class="eek-overview-diagnostics" href="' . esc_url(add_query_arg(['page' => self::PAGE_SLUG, 'section' => 'diagnostics'], admin_url('admin.php'))) . '">' . esc_html__('View diagnostics and recovery options', 'elementor-extension-kit') . ' &rarr;</a></section>';
     }
 
     private static function renderDiagnostics(): void
