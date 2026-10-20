@@ -46,15 +46,7 @@ final class Plugin
     {
         $elementsManager->add_category(self::ELEMENT_CATEGORY, ['title' => esc_html__('Elementor Extension Kit', 'elementor-extension-kit'), 'icon' => 'eicon-apps']);
 
-        // Put EEK first without disturbing the relative order of Elementor categories.
-        $categories = $elementsManager->get_categories();
-        if (! isset($categories[self::ELEMENT_CATEGORY])) {
-            return;
-        }
 
-        $eekCategory = $categories[self::ELEMENT_CATEGORY];
-        unset($categories[self::ELEMENT_CATEGORY]);
-        $elementsManager->set_categories([self::ELEMENT_CATEGORY => $eekCategory] + $categories);
     }
 
     public static function enqueueDesignSystemStyles(): void
