@@ -11,8 +11,8 @@ use ElementorExtensionKit\Core\Plugin;
 final class Dialog extends Widget_Base
 {
     public function get_name(): string { return 'eek-dialog'; }
-    public function get_title(): string { return esc_html__('EEK Modal / Dialog', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Modal / Dialog', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-lightbox eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-dialog']; }
     public function get_script_depends(): array { return ['eek-dialog']; }
