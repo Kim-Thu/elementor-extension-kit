@@ -72,6 +72,16 @@
         }
     });
 
+    const setActiveSection = (section) => {
+        nav.querySelectorAll('a').forEach((link) => {
+            if (sectionFromUrl(link.href) === section) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+    };
+
     const loadSection = async (section, url, updateHistory, restoreFocus) => {
         if (dirty && !window.confirm('You have unsaved settings. Leave this section without saving?')) {
             return false;
@@ -81,6 +91,8 @@
         }
         const controller = new AbortController();
         pending = controller;
+        // Immediate feedback without clearing content or shifting the page.
+        setActiveSection(section);
         content.setAttribute('aria-busy', 'true');
 
         try {
@@ -110,13 +122,7 @@
             content.innerHTML = result.data.html;
             currentSection = section;
             dirty = false;
-            nav.querySelectorAll('a').forEach((link) => {
-                if (sectionFromUrl(link.href) === section) {
-                    link.setAttribute('aria-current', 'page');
-                } else {
-                    link.removeAttribute('aria-current');
-                }
-            });
+            setActiveSection(section);
             if (updateHistory) {
                 window.history.pushState({ eekSection: section }, '', url);
             }
@@ -133,6 +139,7 @@
                 return false;
             }
             // Preserve a functional settings page when AJAX fails.
+            setActiveSection(currentSection);
             window.location.assign(url);
             return false;
         } finally {
