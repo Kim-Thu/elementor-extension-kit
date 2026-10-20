@@ -44,7 +44,12 @@ final class GlobalSettingsPage
         echo '<p class="eek-settings__eyebrow">' . esc_html__('Elementor Extension Kit', 'elementor-extension-kit') . '</p>';
         echo '<h1 class="eek-settings__title">' . esc_html__('Global Settings', 'elementor-extension-kit') . '</h1>';
         echo '<p class="eek-settings__lede">' . esc_html__('Configure once, inherit across the site. Keep local overrides only for deliberate exceptions.', 'elementor-extension-kit') . '</p>';
-        echo '</div></header>';
+        echo '</div><div class="eek-settings__appearance" role="group" aria-label="' . esc_attr__('Settings accent theme', 'elementor-extension-kit') . '">';
+        echo '<span class="eek-settings__appearance-label">' . esc_html__('Accent', 'elementor-extension-kit') . '</span>';
+        echo '<div class="eek-settings__appearance-options">';
+        echo '<button class="eek-settings__theme-button" type="button" data-eek-admin-accent="blue" aria-pressed="true"><span class="eek-settings__swatch" aria-hidden="true"></span>' . esc_html__('Blue', 'elementor-extension-kit') . '</button>';
+        echo '<button class="eek-settings__theme-button" type="button" data-eek-admin-accent="lotus" aria-pressed="false"><span class="eek-settings__swatch eek-settings__swatch--lotus" aria-hidden="true"></span>' . esc_html__('Lotus', 'elementor-extension-kit') . '</button>';
+        echo '</div></div></header>';
         self::renderStatus($status);
         echo '<div class="eek-settings__layout">';
         SettingsNavigation::render($current, self::PAGE_SLUG);
