@@ -28,6 +28,8 @@ final class Plugin
     {
         if (! did_action('elementor/loaded')) { return; }
         add_action('admin_menu', [GlobalSettingsPage::class, 'registerMenu']);
+        // admin-ajax.php does not fire admin_menu; register this on every request.
+        add_action('wp_ajax_eek_settings_section', [GlobalSettingsPage::class, 'ajaxSection']);
         add_action('admin_enqueue_scripts', [GlobalSettingsPage::class, 'enqueueAssets']);
         add_action('admin_post_eek_save_global_settings', [SettingsController::class, 'save']);
         add_action('admin_post_eek_reset_template', [SettingsController::class, 'resetTemplate']);
