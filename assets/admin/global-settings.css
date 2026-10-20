@@ -66,6 +66,8 @@
 .eek-settings__section-title { margin: 0; color: var(--eek-admin-text); font-size: 17px; font-weight: 720; letter-spacing: -.015em; }
 .eek-settings__section-copy { margin: 5px 0 0; color: var(--eek-admin-text-muted); font-size: 14px; }
 .eek-settings__section-body { padding: 0 22px; }
+.eek-template-search-panel .eek-settings__section-head { border-bottom: 0; padding-bottom: 5px; }
+.eek-template-search-panel .eek-settings__section-body { padding-top: 8px; padding-bottom: 20px; }
 .eek-settings input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
 .eek-field { display: grid; grid-template-columns: minmax(175px,260px) minmax(0,1fr); gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--eek-admin-border); }
 .eek-field:last-child { border-bottom: 0; }

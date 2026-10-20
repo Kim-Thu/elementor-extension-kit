@@ -22,7 +22,7 @@ final class TemplateDefaultsPanel
         $selected = is_array($settings['templates'] ?? null) ? $settings['templates'] : [];
         $names = self::elementNames();
 
-        echo '<section class="eek-settings__section">';
+        echo '<section class="eek-settings__section eek-template-search-panel">';
         echo '<div class="eek-settings__section-head"><div>';
         echo '<h3 class="eek-settings__section-title">' . esc_html__('Element presentation defaults', 'elementor-extension-kit') . '</h3>';
         echo '<p class="eek-settings__section-copy">' . esc_html__('Choose once for the whole site. Default / Native leaves the element on its built-in rendering.', 'elementor-extension-kit') . '</p>';
