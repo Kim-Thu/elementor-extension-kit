@@ -14,8 +14,8 @@ use ElementorExtensionKit\Elementor\ElementInstanceInheritance;
 final class Navigation extends Widget_Base
 {
     public function get_name(): string { return 'eek-app-navigation'; }
-    public function get_title(): string { return esc_html__('EEK App Navigation', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('App Navigation', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-nav-menu'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-app-navigation']; }
 
