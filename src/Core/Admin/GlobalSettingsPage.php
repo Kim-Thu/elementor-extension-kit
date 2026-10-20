@@ -14,7 +14,6 @@ final class GlobalSettingsPage
     public static function registerMenu(): void
     {
         add_menu_page(__('Elementor Extension Kit', 'elementor-extension-kit'), __('EEK Settings', 'elementor-extension-kit'), 'manage_options', self::PAGE_SLUG, [self::class, 'render'], 'dashicons-admin-customizer', 58);
-        add_action('wp_ajax_eek_settings_section', [self::class, 'ajaxSection']);
     }
 
     public static function enqueueAssets(string $hook): void

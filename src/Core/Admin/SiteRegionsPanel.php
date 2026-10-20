@@ -51,6 +51,12 @@ final class SiteRegionsPanel
                     $effective === null ? 'default' : 'eek-global',
                     $effective === null ? __('Elementor / theme native', 'elementor-extension-kit') : (string) ($options[(string) $effective] ?? $effective)
                 );
+                if (count($options) === 1) {
+                    echo '<p class="eek-field__hint">' . esc_html__('No published Elementor Header, Footer, Section or Container templates found.', 'elementor-extension-kit') . ' ';
+                    echo '<a href="' . esc_url(admin_url('edit.php?post_type=elementor_library')) . '">' . esc_html__('Open Saved Templates', 'elementor-extension-kit') . '</a></p>';
+                } else {
+                    echo '<p class="eek-field__hint">' . esc_html__('Published region, Section and Container templates are available. Rendering depends on an active Elementor-compatible theme location.', 'elementor-extension-kit') . '</p>';
+                }
                 if ($stale) {
                     SettingsControls::notice(__('The previously assigned template is no longer compatible. Native behavior is active until you save a new selection.', 'elementor-extension-kit'));
                 }
