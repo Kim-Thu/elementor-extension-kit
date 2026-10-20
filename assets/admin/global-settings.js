@@ -10,6 +10,32 @@
         return;
     }
 
+    // Admin palette is a browser preference, never an Elementor/frontend design setting.
+    const themeButtons = root.querySelectorAll('[data-eek-admin-accent]');
+    const setTheme = (theme) => {
+        const value = theme === 'lotus' ? 'lotus' : 'blue';
+        root.setAttribute('data-eek-admin-theme', value);
+        themeButtons.forEach((button) => {
+            button.setAttribute('aria-pressed', String(button.dataset.eekAdminAccent === value));
+        });
+    };
+    let savedTheme = 'blue';
+    try {
+        savedTheme = window.localStorage.getItem('eek-admin-accent') || 'blue';
+    } catch (error) {
+        // Private browsing may disable storage; the default blue theme remains usable.
+    }
+    setTheme(savedTheme);
+    themeButtons.forEach((button) => button.addEventListener('click', () => {
+        const selected = button.dataset.eekAdminAccent;
+        setTheme(selected);
+        try {
+            window.localStorage.setItem('eek-admin-accent', selected);
+        } catch (error) {
+            // Choosing a color works even if persistence is unavailable.
+        }
+    }));
+
     let pending = null;
     let dirty = false;
     let currentSection = new URL(window.location.href).searchParams.get('section') || 'overview';
