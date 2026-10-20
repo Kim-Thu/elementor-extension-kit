@@ -13,8 +13,8 @@ use ElementorExtensionKit\Core\Plugin;
 final class Timeline extends Widget_Base
 {
     public function get_name(): string { return 'eek-timeline'; }
-    public function get_title(): string { return esc_html__('EEK Timeline', 'elementor-extension-kit'); }
-    public function get_icon(): string { return 'eek-brand-mark'; }
+    public function get_title(): string { return esc_html__('Timeline', 'elementor-extension-kit'); }
+    public function get_icon(): string { return 'eicon-time-line eek-widget-icon'; }
     public function get_categories(): array { return [Plugin::ELEMENT_CATEGORY]; }
     public function get_style_depends(): array { return ['eek-timeline']; }
 
