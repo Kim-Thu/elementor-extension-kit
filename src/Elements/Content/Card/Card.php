@@ -261,9 +261,7 @@ final class Card extends Widget_Base
         } elseif (in_array($source, ['current', 'selected'], true)) {
             $post = $source === 'current' ? get_post() : get_post(absint($settings['post_id'] ?? 0));
             if (! $post instanceof WP_Post || ! self::canDisplayPost($post)) {
-                if ($this->get_edit_mode()) {
-                    echo '<div class="eek-card__empty">' . esc_html__('Select a published Post or CPT to display this Card.', 'elementor-extension-kit') . '</div>';
-                }
+                // Do not render unpublished or non-public content to anonymous visitors.
                 return;
             }
             $card = self::postData($post, $settings);
